@@ -407,6 +407,378 @@
 			</pre>
 			<!-- End of method-->
 			<!-- End of service-->
+			<!-- Start of service-->
+			<h2>Leagues</h2>
+			<p>League resource management service.</p>
+			<!-- Start of method-->
+			<h3>Get available leagues</h3>
+			<p>Returns the list of leagues.</p>
+			<h4>Headers</h4>
+			<p>Custom accept header must be provided when requesting a league resource. It defines vendor name, API version and content type.</p>
+			<p><code>Accept: application/vnd.aracrown.v1+json</code></p>
+			<h4>Method</h4>
+			<p>GET <code>/leagues</code></p>
+			<h4>Query parameters</h4>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>f</td>
+				  <td>Position of the first result, numbered from 0. Default is 0.</td>	  
+				</tr>
+				<tr>
+				  <td>p</td>
+				  <td>Maximum number to return. Default is 10. Available maximum - 500.</td>	  
+				</tr>
+				<tr>
+				  <td>name</td>
+				  <td>Filter leagues by name.</td>	  
+				</tr>
+			  </tbody>
+			</table>					 
+			<h4>Result</h4>
+			<p>Json object of elements is returned as a result to request.</p>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>total</td>
+				  <td>Total count of query results.</td>	  
+				</tr>
+				<tr>
+				  <td>count</td>
+				  <td>How may items are returned by this query result.</td>	  
+				</tr>
+				<tr>
+				  <td>pageSize</td>
+				  <td>Page size for this response.</td>	  
+				</tr>
+				<tr>
+				  <td>currentPage</td>
+				  <td>The current page.</td>	  
+				</tr>
+				<tr>
+				  <td>items</td>
+				  <td>	
+					Collection of items returned.
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Resource property</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>uniqueIdentifier(id, link)</td>
+								<td>The league unique identifier, containing resource id and the link to this resource.</td>	  
+							</tr>
+							<tr>
+								<td>name</td>
+								<td>The league name.</td>	  
+							</tr>
+							<tr>
+								<td>participantType</td>
+								<td>
+								<p>The participant type.</p>
+								<p>Available participant types:</p>
+								<code>
+									/** Single player type. */<br/>
+									INDIVIDUAL,<br/><br/>
+
+									/** Team type. */<br/>
+									TEAM,<br/><br/>
+
+									/** Other type, not covered by enumeration. */<br/>
+									OTHER
+								</code>									
+								</td>	  
+							</tr>
+							<tr>
+								<td>leagueType</td>
+								<td>
+								<p>The league type.</p>
+								<p>Available league types:</p>
+								<code>
+									/** Different elimination types. */<br/>
+									ELIMINATION,<br/><br/>
+
+									/** Group tournament type. */<br/>
+									GROUP,<br/><br/>
+
+									/** ELIMINATION, GROUP. */<br/>
+									MULTI_STAGE,<br/><br/>
+
+									/** Other type, not covered here. */<br/>
+									OTHER;
+								</code>
+								</td>	  
+							</tr>
+							<tr>
+								<td>country(id, link)</td>
+								<td>The country unique identifier of this league.</td>	  
+							</tr>
+							<tr>
+								<td>sportType(id, link)</td>
+								<td>The sport type unique identifier of this league.</td>	  
+							</tr>
+						</tbody>
+					</table>
+				  </td>	  
+				</tr>
+			  </tbody>
+			</table>
+			<h4>Response codes</h4>
+			<h4>Examples</h4>
+			<p>Request</p>
+			<p>GET <code>/leagues?f=0&amp;p=10&amp;name=Eurobasket</code></p>
+			<p>Response</p>
+			<pre>
+{
+   "total": 1,
+   "count": 1,
+   "pageSize": 10,
+   "currentPage": 0,
+   "items": [   {
+      "uniqueIdentifier":       {
+         "id": 5,
+         "link": "/leagues/5"
+      },
+      "name": "Eurobasket",
+      "sportType":       {
+         "id": 2,
+         "link": "/sports/2"
+      },
+      "participantType": "TEAM",
+      "leagueType": "MULTI_STAGE",
+      "country":       {
+         "id": 3,
+         "link": "/countries/3"
+      }
+   }]
+}
+			</pre>
+			<!-- End of method-->
+			<!-- Start of method-->
+			<h3>Get concrete league</h3>
+			<p>Returns the details of selected league.</p>
+			<h4>Headers</h4>
+			<p>Custom accept header must be provided when requesting a league resource. It defines vendor name, API version and content type.</p>
+			<p><code>Accept: application/vnd.aracrown.v1+json</code></p>
+			<h4>Method</h4>
+			<p>GET <code>/leagues/{id}</code></p>
+			<h4>Query parameters</h4>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>id</td>
+				  <td>The unique identifier of league to retrieve.</td>	  
+				</tr>
+			  </tbody>
+			</table>					 
+			<h4>Result</h4>
+			<p>Json object of elements is returned as a result to request.</p>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+								<td>uniqueIdentifier(id, link)</td>
+								<td>The league unique identifier, containing resource id and the link to this resource.</td>	  
+							</tr>
+							<tr>
+								<td>name</td>
+								<td>The league name.</td>	  
+							</tr>
+							<tr>
+								<td>participantType</td>
+								<td>
+								<p>The participant type.</p>
+								<p>Available participant types:</p>
+								<code>
+									/** Single player type. */<br/>
+									INDIVIDUAL,<br/><br/>
+
+									/** Team type. */<br/>
+									TEAM,<br/><br/>
+
+									/** Other type, not covered by enumeration. */<br/>
+									OTHER
+								</code>									
+								</td>	  
+							</tr>
+							<tr>
+								<td>leagueType</td>
+								<td>
+								<p>The league type.</p>
+								<p>Available league types:</p>
+								<code>
+									/** Different elimination types. */<br/>
+									ELIMINATION,<br/><br/>
+
+									/** Group tournament type. */<br/>
+									GROUP,<br/><br/>
+
+									/** ELIMINATION, GROUP. */<br/>
+									MULTI_STAGE,<br/><br/>
+
+									/** Other type, not covered here. */<br/>
+									OTHER;
+								</code>
+								</td>	  
+							</tr>
+							<tr>
+								<td>country(id, link)</td>
+								<td>The country unique identifier of this league.</td>	  
+							</tr>
+							<tr>
+								<td>sportType(id, link)</td>
+								<td>The sport type unique identifier of this league.</td>	  
+							</tr>
+			  </tbody>
+			</table>
+			<h4>Response codes</h4>
+			<h4>Examples</h4>
+			<p>Request</p>
+			<p>GET <code>/leagues/10001</code></p>
+			<p>Response</p>
+			<pre>
+{
+   "uniqueIdentifier":    {
+      "id": 10001,
+      "link": "/leagues/10001"
+   },
+   "name": "Test925",
+   "sportType":    {
+      "id": 1,
+      "link": "/sports/1"
+   },
+   "participantType": "TEAM",
+   "leagueType": "GROUP",
+   "country":    {
+      "id": 1,
+      "link": "/countries/1"
+   }
+}
+			</pre>
+			<!-- End of method-->
+			<!-- Start of method-->
+			<h3>Seasons of the league</h3>
+			<p>Returns the list of seasons for the selected league.</p>
+			<h4>Headers</h4>
+			<p>Custom accept header must be provided when requesting a seasons resource. It defines vendor name, API version and content type.</p>
+			<p><code>Accept: application/vnd.aracrown.v1+json</code></p>
+			<h4>Method</h4>
+			<p>GET <code>/leagues/{id}/seasons</code></p>
+			<h4>Query parameters</h4>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>id</td>
+				  <td>The unique identifier of sport type.</td>	  
+				</tr>
+			  </tbody>
+			</table>					 
+			<h4>Result</h4>
+			<p>Json object of elements is returned as a result to request.</p>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>total</td>
+				  <td>Total count of query results.</td>	  
+				</tr>
+				<tr>
+				  <td>count</td>
+				  <td>How may items are returned by this query result.</td>	  
+				</tr>
+				<tr>
+				  <td>pageSize</td>
+				  <td>Page size for this response.</td>	  
+				</tr>
+				<tr>
+				  <td>currentPage</td>
+				  <td>The current page.</td>	  
+				</tr>
+				<tr>
+				  <td>items</td>
+				  <td>	
+					Collection of items returned.
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Resource property</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>uniqueIdentifier(id, link)</td>
+								<td>The season unique identifier, containing resource id and the link to this resource.</td>	  
+							</tr>
+							<tr>
+								<td>name</td>
+								<td>The season name.</td>	  
+							</tr>							
+						</tbody>
+					</table>
+				  </td>	  
+				</tr>
+			  </tbody>
+			</table>
+			<h4>Response codes</h4>
+			<h4>Examples</h4>
+			<p>Request</p>
+			<p>GET <code>/leagues/5/seasons</code></p>
+			<p>Response</p>
+			<pre>
+{
+   "total": 1,
+   "count": 1,
+   "pageSize": 10,
+   "currentPage": 0,
+   "items": [   {
+      "uniqueIdentifier":       {
+         "id": 50,
+         "link": "/seasons/50"
+      },
+      "name": "2013"
+   }]
+}
+			</pre>
+			<!-- End of method-->
+			<!-- End of service-->
       </div><!--/row-->
       <hr>
       <div class="navbar" >
