@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Sports League Manager - User guide</title>
+    <!-- Mobile viewport optimized -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- Mobile Internet Explorer allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/black-tie/jquery-ui.css" rel="stylesheet">
+    <link href="css/jquery.tocify.css" rel="stylesheet">
+    <link href="css/prettify.css" type="text/css" rel="stylesheet" />
+    <link href="css/styles.css" type="text/css" rel="stylesheet" />
+    
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    <style>
+
+@media (max-width: 767px) {
+    #toc {
+        position: relative;
+        width: 100%;
+        margin: 0px 0px 20px 0px;
+    }
+}
+    </style>
+  </head>
+
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Sports League Manager - User guide</a>
+
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="index.html">Home</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3 tocify">
+          <div id="toc">
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">
+			
+			<h2>1. Introduction</h2>
+			<p>This is an open source, Java EE based solution for sports leagues, tournaments, teams/players, fixtures and results management. </p>
+			<p><a href="#6.Architecture">Architecture page</a> describes technical architecture, <a href="#5.ERModel">Sports asset diagrams show</a> what assets are covered by this component and here you may find some abstract information.</p>
+			
+			<h2>2. Licence</h2>
+			<p>League manager is distributed under the ASL 2.0 license.</p>
+			<h2>3. Requirements</h2>
+			<p><a href="http://www.postgresql.org/">PostgreSQL 9.x</a> database is supported for sports management component. Other database types should run without issues, but officially not supported.</p>
+			<p><a href="http://www.jboss.org/jbossas">Jboss &gt;=7.1.3</a> is supported application server.</p>
+			<h2>4. Features</h2>
+			<p>
+			<ul>
+<li>Participant types:
+
+<ul>
+<li>Player/single;</li>
+<li>Team/multiple;</li>
+</ul>
+</li>
+<li>League/tournament:
+
+<ul>
+<li>Seasons for league;</li>
+<li>Copy league season;</li>
+<li>Different league formats;</li>
+<li>Multi level tournament grouping (Group stage, knockout, elimination);</li>
+</ul>
+</li>
+<li>Match/Game/Fixture
+
+<ul>
+<li>Custom selection of players for each team, participating in fixture.</li>
+</ul>
+</li>
+</ul>
+</p>
+			<h2>5. ER Model</h2>
+			<h3>High level asset coverage</h3>
+<p>Everything starts from a sport type. Once sport type is created, it is possible to add new league to it. </p>
+
+<p>League usually belongs only to a single sport type and is taking place in single country. However, league may cover several countries, like UEFA championship. For such purposes new country types are used: "World", "Europe", etc. </p>
+
+<p>League usually is taking place at least for one season. Season is created even league is acting as a single tournament event. Season usually defines the year when participants are attending the event(game/fixture). </p>
+
+<p>A season is a subset of tournament, because some leagues do not have any specified list of tournaments. They use double round-robin system. In such case we do not want to create any fake single tournament. So what is tournament? A tournament asset usually covers such entities as Group, Qualification rounds, Main rounds, single/multiple elimination rounds and other names. Tournament may have sub tournaments(or group stages) and it involves many (at least two) participants. Sub tournament may also act as round.</p>
+
+<p>Each tournament involves many participants. Participant usually is player or team. In tennis doubles are also treated as a team. Player also may act as a part of the team. Player/Team may play in many tournaments/leagues.</p>
+
+<p>Each tournament has many fixtures - a sports matches that have been arranged for a particular time and place. Each fixture end with some kind of result. However, fixture also may be <strong>suspended</strong>, postponed or <strong>canceled</strong>. There is no result in such cases. Each fixture is played between two participants.</p>
+
+<p><img src="https://github.com/aracrown/league-manager/wiki/images/entity-diagram.png" alt="High level entity diagram"></p>
+
+			<h3>Persistence model</h3>
+			<p>High level diagram transformed into JPA 2 persistence diagram:</p>
+			<p><img src="https://github.com/aracrown/league-manager/wiki/images/sports-persistence.png" alt="ER diagram"></p>
+			<h2>6. Architecture</h2>
+			<h2>7. Getting started</h2>
+			<h2>8. REST API</h2>
+			<p>The documentation may be found under separate <a href="http://www.aracrown.org/docs/league-manager/v1.0.0/api-reference/rest/index.html" target="_blank">REST API</a> page.</p>
+			<h2>9. Migration</h2>
+			<p>Nothing to migrate yet.</p>
+      </div><!--/row-->
+      <hr>
+      <div class="navbar" >
+        <p>
+            Copyright &copy; 2013 aracrown.org
+        </p>
+      </div>
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.tocify.min.js"></script>
+    <script src="js/prettify.js"></script>
+    <script>
+        $(function() {
+
+            $("#toc").tocify({ selectors: "h2, h3, h4", scrollTo: 60, highlightOffset: 60, extendPage: true });
+
+            prettyPrint();
+
+            $(".optionName").popover({ trigger: "hover" });
+
+            $("a[href='#']").click(function(event) {
+ 
+                event.preventDefault();
+
+            });
+
+        });
+    </script>
+  </body>
+</html>
