@@ -186,7 +186,7 @@
 			<p><code>Accept: application/vnd.aracrown.v1+json</code></p>
 			<h4>Method</h4>
 			<p>GET <code>/sports/{id}</code></p>
-			<h4>Query parameters</h4>
+			<h4>Path parameters</h4>
 			<table class="table table-hover">
 			  <thead>
 				<tr>
@@ -244,7 +244,7 @@
 			<p><code>Accept: application/vnd.aracrown.v1+json</code></p>
 			<h4>Method</h4>
 			<p>GET <code>/sports/{id}/leagues</code></p>
-			<h4>Query parameters</h4>
+			<h4>Path and Query parameters</h4>
 			<table class="table table-hover">
 			  <thead>
 				<tr>
@@ -255,7 +255,15 @@
 			  <tbody>
 				<tr>
 				  <td>id</td>
-				  <td>The unique identifier of sport type.</td>	  
+				  <td><span class="label label-info">Path parameter!</span>The unique identifier of sport type.<red>Path param</red></td>	  
+				</tr>
+				<tr>
+				  <td>f</td>
+				  <td>Position of the first result, numbered from 0. Default is 0.</td>	  
+				</tr>
+				<tr>
+				  <td>p</td>
+				  <td>Maximum number to return. Default is 10. Available maximum - 500.</td>	  
 				</tr>
 			  </tbody>
 			</table>					 
@@ -690,7 +698,7 @@
 			<p><code>Accept: application/vnd.aracrown.v1+json</code></p>
 			<h4>Method</h4>
 			<p>GET <code>/leagues/{id}/seasons</code></p>
-			<h4>Query parameters</h4>
+			<h4>Path and Query parameters</h4>
 			<table class="table table-hover">
 			  <thead>
 				<tr>
@@ -701,7 +709,15 @@
 			  <tbody>
 				<tr>
 				  <td>id</td>
-				  <td>The unique identifier of sport type.</td>	  
+				  <td><span class="label label-info">Path parameter!</span>The unique identifier of sport type.</td>	  
+				</tr>
+				<tr>
+				  <td>f</td>
+				  <td>Position of the first result, numbered from 0. Default is 0.</td>	  
+				</tr>
+				<tr>
+				  <td>p</td>
+				  <td>Maximum number to return. Default is 10. Available maximum - 500.</td>	  
 				</tr>
 			  </tbody>
 			</table>					 
@@ -851,7 +867,7 @@
 			<p><code>Accept: application/vnd.aracrown.v1+json</code></p>
 			<h4>Method</h4>
 			<p>GET <code>/seasons/{id}/tournaments</code></p>
-			<h4>Query parameters</h4>
+			<h4>Path and Query parameters</h4>
 			<table class="table table-hover">
 			  <thead>
 				<tr>
@@ -862,7 +878,15 @@
 			  <tbody>
 				<tr>
 				  <td>id</td>
-				  <td>The unique identifier of sport type.</td>	  
+				  <td><span class="label label-info">Path parameter!</span>The unique identifier of sport type.</td>	  
+				</tr>
+				<tr>
+				  <td>f</td>
+				  <td>Position of the first result, numbered from 0. Default is 0.</td>	  
+				</tr>
+				<tr>
+				  <td>p</td>
+				  <td>Maximum number to return. Default is 10. Available maximum - 500.</td>	  
 				</tr>
 			  </tbody>
 			</table>					 
@@ -1021,7 +1045,7 @@
 			<p><code>Accept: application/vnd.aracrown.v1+json</code></p>
 			<h4>Method</h4>
 			<p>GET <code>/tournaments/{id}/tournaments</code></p>
-			<h4>Query parameters</h4>
+			<h4>Path and Query parameters</h4>
 			<table class="table table-hover">
 			  <thead>
 				<tr>
@@ -1032,7 +1056,15 @@
 			  <tbody>
 				<tr>
 				  <td>id</td>
-				  <td>The unique identifier of parent tournament.</td>	  
+				  <td><span class="label label-info">Path parameter!</span>The unique identifier of parent tournament.</td>	  
+				</tr>
+				<tr>
+				  <td>f</td>
+				  <td>Position of the first result, numbered from 0. Default is 0.</td>	  
+				</tr>
+				<tr>
+				  <td>p</td>
+				  <td>Maximum number to return. Default is 10. Available maximum - 500.</td>	  
 				</tr>
 			  </tbody>
 			</table>					 
@@ -1154,7 +1186,7 @@
 			<p><code>Accept: application/vnd.aracrown.v1+json</code></p>
 			<h4>Method</h4>
 			<p>GET <code>/tournaments/{id}/fixtures</code></p>
-			<h4>Query parameters</h4>
+			<h4>Path and Query parameters</h4>
 			<table class="table table-hover">
 			  <thead>
 				<tr>
@@ -1165,7 +1197,15 @@
 			  <tbody>
 				<tr>
 				  <td>id</td>
-				  <td>The unique identifier of parent tournament.</td>	  
+				  <td><span class="label label-info">Path parameter!</span>The unique identifier of parent tournament.</td>	  
+				</tr>
+				<tr>
+				  <td>f</td>
+				  <td>Position of the first result, numbered from 0. Default is 0.</td>	  
+				</tr>
+				<tr>
+				  <td>p</td>
+				  <td>Maximum number to return. Default is 10. Available maximum - 500.</td>	  
 				</tr>
 			  </tbody>
 			</table>					 
