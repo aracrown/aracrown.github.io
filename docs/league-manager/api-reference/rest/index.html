@@ -779,6 +779,942 @@
 			</pre>
 			<!-- End of method-->
 			<!-- End of service-->
+			
+			<!-- League season-->
+			<!-- Start of service-->
+			<h2>League seasons</h2>
+			<p>League season resource management service.</p>
+			
+			<!-- Start of method-->
+			<h3>Get concrete league season</h3>
+			<p>Returns the details of selected league season.</p>
+			<h4>Headers</h4>
+			<p>Custom accept header must be provided when requesting a league season resource. It defines vendor name, API version and content type.</p>
+			<p><code>Accept: application/vnd.aracrown.v1+json</code></p>
+			<h4>Method</h4>
+			<p>GET <code>/seasons/{id}</code></p>
+			<h4>Query parameters</h4>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>id</td>
+				  <td>The unique identifier of league to retrieve.</td>	  
+				</tr>
+			  </tbody>
+			</table>					 
+			<h4>Result</h4>
+			<p>Json object of elements is returned as a result to request.</p>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+					<td>uniqueIdentifier(id, link)</td>
+					<td>The league unique identifier, containing resource id and the link to this resource.</td>	  
+				</tr>
+				<tr>
+					<td>name</td>
+					<td>The league name.</td>	  
+				</tr>							
+			  </tbody>
+			</table>
+			<h4>Response codes</h4>
+			<h4>Examples</h4>
+			<p>Request</p>
+			<p>GET <code>/seasons/50</code></p>
+			<p>Response</p>
+			<pre>
+{
+   "uniqueIdentifier":    {
+      "id": 50,
+      "link": "/seasons/50"
+   },
+   "name": "2013"
+}
+			</pre>
+			<!-- End of method-->
+			<!-- Start of method-->
+			<h3>Tournaments of the league season</h3>
+			<p>Returns the list of parent tournamets for the selected league season.</p>
+			<h4>Headers</h4>
+			<p>Custom accept header must be provided when requesting a tournament resource. It defines vendor name, API version and content type.</p>
+			<p><code>Accept: application/vnd.aracrown.v1+json</code></p>
+			<h4>Method</h4>
+			<p>GET <code>/seasons/{id}/tournaments</code></p>
+			<h4>Query parameters</h4>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>id</td>
+				  <td>The unique identifier of sport type.</td>	  
+				</tr>
+			  </tbody>
+			</table>					 
+			<h4>Result</h4>
+			<p>Json object of elements is returned as a result to request.</p>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>total</td>
+				  <td>Total count of query results.</td>	  
+				</tr>
+				<tr>
+				  <td>count</td>
+				  <td>How may items are returned by this query result.</td>	  
+				</tr>
+				<tr>
+				  <td>pageSize</td>
+				  <td>Page size for this response.</td>	  
+				</tr>
+				<tr>
+				  <td>currentPage</td>
+				  <td>The current page.</td>	  
+				</tr>
+				<tr>
+				  <td>items</td>
+				  <td>	
+					Collection of items returned.
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Resource property</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>uniqueIdentifier(id, link)</td>
+								<td>The tournament unique identifier, containing resource id and the link to this resource.</td>	  
+							</tr>
+							<tr>
+								<td>name</td>
+								<td>The tournament name.</td>	  
+							</tr>							
+						</tbody>
+					</table>
+				  </td>	  
+				</tr>
+			  </tbody>
+			</table>
+			<h4>Response codes</h4>
+			<h4>Examples</h4>
+			<p>Request</p>
+			<p>GET <code>/seasons/50/tournaments</code></p>
+			<p>Response</p>
+			<pre>
+{
+   "total": 2,
+   "count": 2,
+   "pageSize": 10,
+   "currentPage": 0,
+   "items":    [
+            {
+         "uniqueIdentifier":          {
+            "id": 51,
+            "link": "/tournaments/51"
+         },
+         "name": "Round 1"
+      },
+            {
+         "uniqueIdentifier":          {
+            "id": 52,
+            "link": "/tournaments/52"
+         },
+         "name": "Round 2"
+      }
+   ]
+}
+			</pre>
+			<!-- End of method-->
+			<!-- End of service-->
+			
+			<!-- Tournaments -->
+			<!-- Start of service-->
+			<h2>Tournaments</h2>
+			<p>Tournaments resource management service.</p>
+			
+			<!-- Start of method-->
+			<h3>Get concrete tournament</h3>
+			<p>Returns the details of selected tournament.</p>
+			<h4>Headers</h4>
+			<p>Custom accept header must be provided when requesting a tournament resource. It defines vendor name, API version and content type.</p>
+			<p><code>Accept: application/vnd.aracrown.v1+json</code></p>
+			<h4>Method</h4>
+			<p>GET <code>/tournaments/{id}</code></p>
+			<h4>Query parameters</h4>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>id</td>
+				  <td>The unique identifier of tournament to retrieve.</td>	  
+				</tr>
+			  </tbody>
+			</table>					 
+			<h4>Result</h4>
+			<p>Json object of elements is returned as a result to request.</p>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+					<td>uniqueIdentifier(id, link)</td>
+					<td>The tournament unique identifier, containing resource id and the link to this resource.</td>	  
+				</tr>
+				<tr>
+					<td>name</td>
+					<td>The tournament name.</td>	  
+				</tr>							
+			  </tbody>
+			</table>
+			<h4>Response codes</h4>
+			<h4>Examples</h4>
+			<p>Request</p>
+			<p>GET <code>/tournaments/51</code></p>
+			<p>Response</p>
+			<pre>
+{
+   "uniqueIdentifier":    {
+      "id": 51,
+      "link": "/tournaments/51"
+   },
+   "name": "Round 1"
+}
+			</pre>
+			<!-- End of method-->
+			<!-- Start of method-->
+			<h3>Children tournaments of the parent tournament</h3>
+			<p>Returns the list of children tournamets for the selected parent tournament.</p>
+			<h4>Headers</h4>
+			<p>Custom accept header must be provided when requesting a tournament resource. It defines vendor name, API version and content type.</p>
+			<p><code>Accept: application/vnd.aracrown.v1+json</code></p>
+			<h4>Method</h4>
+			<p>GET <code>/tournaments/{id}/tournaments</code></p>
+			<h4>Query parameters</h4>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>id</td>
+				  <td>The unique identifier of parent tournament.</td>	  
+				</tr>
+			  </tbody>
+			</table>					 
+			<h4>Result</h4>
+			<p>Json object of elements is returned as a result to request.</p>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>total</td>
+				  <td>Total count of query results.</td>	  
+				</tr>
+				<tr>
+				  <td>count</td>
+				  <td>How may items are returned by this query result.</td>	  
+				</tr>
+				<tr>
+				  <td>pageSize</td>
+				  <td>Page size for this response.</td>	  
+				</tr>
+				<tr>
+				  <td>currentPage</td>
+				  <td>The current page.</td>	  
+				</tr>
+				<tr>
+				  <td>items</td>
+				  <td>	
+					Collection of items returned.
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Resource property</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>uniqueIdentifier(id, link)</td>
+								<td>The tournament unique identifier, containing resource id and the link to this resource.</td>	  
+							</tr>
+							<tr>
+								<td>name</td>
+								<td>The tournament name.</td>	  
+							</tr>							
+						</tbody>
+					</table>
+				  </td>	  
+				</tr>
+			  </tbody>
+			</table>
+			<h4>Response codes</h4>
+			<h4>Examples</h4>
+			<p>Request</p>
+			<p>GET <code>/tournaments/51/tournaments</code></p>
+			<p>Response</p>
+			<pre>
+{
+   "total": 6,
+   "count": 6,
+   "pageSize": 10,
+   "currentPage": 0,
+   "items":    [
+            {
+         "uniqueIdentifier":          {
+            "id": 511,
+            "link": "/tournaments/511"
+         },
+         "name": "Group A"
+      },
+            {
+         "uniqueIdentifier":          {
+            "id": 512,
+            "link": "/tournaments/512"
+         },
+         "name": "Group B"
+      },
+            {
+         "uniqueIdentifier":          {
+            "id": 513,
+            "link": "/tournaments/513"
+         },
+         "name": "Group C"
+      },
+            {
+         "uniqueIdentifier":          {
+            "id": 514,
+            "link": "/tournaments/514"
+         },
+         "name": "Group D"
+      },
+            {
+         "uniqueIdentifier":          {
+            "id": 521,
+            "link": "/tournaments/521"
+         },
+         "name": "Group E"
+      },
+            {
+         "uniqueIdentifier":          {
+            "id": 522,
+            "link": "/tournaments/522"
+         },
+         "name": "Group F"
+      }
+   ]
+}
+			</pre>
+			<!-- End of method-->
+			<!-- Start of method-->
+			<h3>Fixture list of the parent tournament</h3>
+			<p>Returns the list of fixtures for the selected parent tournament.</p>
+			<h4>Headers</h4>
+			<p>Custom accept header must be provided when requesting a fixture resource. It defines vendor name, API version and content type.</p>
+			<p><code>Accept: application/vnd.aracrown.v1+json</code></p>
+			<h4>Method</h4>
+			<p>GET <code>/tournaments/{id}/fixtures</code></p>
+			<h4>Query parameters</h4>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>id</td>
+				  <td>The unique identifier of parent tournament.</td>	  
+				</tr>
+			  </tbody>
+			</table>					 
+			<h4>Result</h4>
+			<p>Json object of elements is returned as a result to request.</p>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>total</td>
+				  <td>Total count of query results.</td>	  
+				</tr>
+				<tr>
+				  <td>count</td>
+				  <td>How may items are returned by this query result.</td>	  
+				</tr>
+				<tr>
+				  <td>pageSize</td>
+				  <td>Page size for this response.</td>	  
+				</tr>
+				<tr>
+				  <td>currentPage</td>
+				  <td>The current page.</td>	  
+				</tr>
+				<tr>
+				  <td>items</td>
+				  <td>	
+					Collection of items returned.
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Resource property</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>uniqueIdentifier(id, link)</td>
+								<td>The fixture unique identifier, containing resource id and the link to this resource.</td>	  
+							</tr>
+							<tr>
+								<td>featured</td>
+								<td>Is this game marked as a featured.</td>	  
+							</tr>
+							<tr>
+								<td>status</td>
+								<td>
+								<p>The fixture status.</p>
+								<p>Available statuses:</p>
+								<code>
+									/**<br/>
+									 * The game is created, may be in progress, but not yet completed.<br/>
+									 */<br/>
+									ACTIVE,<br/><br/>
+
+									/**<br/>
+									 * The game is successfully completed.<br/>
+									 */<br/>
+									COMPLETED,<br/><br/>
+
+									/**<br/>
+									 * The game is suspended for some reasons. May be suspended if in edit mode.<br/>
+									 */<br/>
+									SUSPENDED,<br/><br/>
+
+									/**<br/>
+									 * The game is postponed.<br/>
+									 */<br/>
+									POSTPONED,<br/><br/>
+
+									/**<br/>
+									 * The game is canceled.<br/>
+									 */<br/>
+									CANCELED
+								</code>	
+								
+								</td>	  
+							</tr>
+							<tr>
+								<td>gameDate</td>
+								<td>The fixture event date and time. Time format: <code>yyyy-MM-dd'T'HH:mm:ss.SSS zzz</code></td>	  
+							</tr>
+							<tr>
+								<td>participant1</td>
+								<td>The first participant name.</td>	  
+							</tr>
+							<tr>
+								<td>participant2</td>
+								<td>The second participant name.</td>	  
+							</tr>
+							<tr>
+								<td>leagueName</td>
+								<td>The league name. Combination of league name and the season name.</td>	  
+							</tr>
+							<tr>
+								<td>groupName</td>
+								<td>The group name. All tree name is combined into a single group name.</td>	  
+							</tr>
+							<tr>
+								<td>sportTypeName</td>
+								<td>The sport type name.</td>	  
+							</tr>
+							<tr>
+								<td>sportTypeResourcePath</td>
+								<td>The link to sport type.</td>	  
+							</tr>
+							<tr>
+								<td>leagueResourcePath</td>
+								<td>The link to league resource.</td>	  
+							</tr>							
+						</tbody>
+					</table>
+				  </td>	  
+				</tr>
+			  </tbody>
+			</table>
+			<h4>Response codes</h4>
+			<h4>Examples</h4>
+			<p>Request</p>
+			<p>GET <code>/tournaments/511/fixtures</code></p>
+			<p>Response</p>
+			<pre>
+{
+   "total": 3,
+   "count": 3,
+   "pageSize": 10,
+   "currentPage": 0,
+   "items":    [
+            {
+         "uniqueIdentifier":          {
+            "id": 51,
+            "link": "/fixtures/51"
+         },
+         "featured": false,
+         "status": "ACTIVE",
+         "gameDate": "2013-09-04T12:30:00.000 UTC",
+         "participant1": "Israel",
+         "participant2": "Great Britain",
+         "leagueName": "Eurobasket 2013",
+         "groupName": "Round 1 / Group A",
+         "sportTypeName": "Basketball",
+         "sportTypeResourcePath":          {
+            "id": 2,
+            "link": "/sports/2"
+         },
+         "leagueResourcePath":          {
+            "id": 5,
+            "link": "/leagues/5"
+         }
+      },
+            {
+         "uniqueIdentifier":          {
+            "id": 52,
+            "link": "/fixtures/52"
+         },
+         "featured": false,
+         "status": "ACTIVE",
+         "gameDate": "2013-09-04T15:45:00.000 UTC",
+         "participant1": "Belgium",
+         "participant2": "Ukraine",
+         "leagueName": "Eurobasket 2013",
+         "groupName": "Round 1 / Group A",
+         "sportTypeName": "Basketball",
+         "sportTypeResourcePath":          {
+            "id": 2,
+            "link": "/sports/2"
+         },
+         "leagueResourcePath":          {
+            "id": 5,
+            "link": "/leagues/5"
+         }
+      },
+            {
+         "uniqueIdentifier":          {
+            "id": 53,
+            "link": "/fixtures/53"
+         },
+         "featured": false,
+         "status": "ACTIVE",
+         "gameDate": "2013-09-04T19:00:00.000 UTC",
+         "participant1": "France",
+         "participant2": "Germany",
+         "leagueName": "Eurobasket 2013",
+         "groupName": "Round 1 / Group A",
+         "sportTypeName": "Basketball",
+         "sportTypeResourcePath":          {
+            "id": 2,
+            "link": "/sports/2"
+         },
+         "leagueResourcePath":          {
+            "id": 5,
+            "link": "/leagues/5"
+         }
+      }
+   ]
+}
+			</pre>
+			<!-- End of method-->
+			<!-- End of service-->
+			
+			<!-- Fixtures -->
+			<!-- Start of service-->
+			<h2>Fixtures</h2>
+			<p>Fixtures resource management service.</p>
+			<!-- Start of method-->
+			<h3>Query fixtures</h3>
+			<p>Returns the list of fixtures.</p>
+			<h4>Headers</h4>
+			<p>Custom accept header must be provided when requesting a fixture. It defines vendor name, API version and content type.</p>
+			<p><code>Accept: application/vnd.aracrown.v1+json</code></p>
+			<h4>Method</h4>
+			<p>GET <code>/fixtures</code></p>
+			<h4>Query parameters</h4>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>f</td>
+				  <td>Position of the first result, numbered from 0. Default is 0.</td>	  
+				</tr>
+				<tr>
+				  <td>p</td>
+				  <td>Maximum number to return. Default is 10. Available maximum - 500.</td>	  
+				</tr>
+				<tr>
+				  <td>fetchType</td>
+				  <td>Filter fixtures by some paramters.
+					<p>Available fetch types:</p>
+					<code>
+						/** Fetch events for today. */<br/>
+						TODAY,<br/><br/>
+
+						/** Fetch events, not started yet. */<br/>
+						NOT_STARTED,<br/><br/>
+
+						/** Unknown fetch type. */<br/>
+						OTHER;
+					</code>	
+				  </td>	  
+				</tr>
+			  </tbody>
+			</table>					 
+			<h4>Result</h4>
+			<p>Json object of elements is returned as a result to request.</p>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>total</td>
+				  <td>Total count of query results.</td>	  
+				</tr>
+				<tr>
+				  <td>count</td>
+				  <td>How may items are returned by this query result.</td>	  
+				</tr>
+				<tr>
+				  <td>pageSize</td>
+				  <td>Page size for this response.</td>	  
+				</tr>
+				<tr>
+				  <td>currentPage</td>
+				  <td>The current page.</td>	  
+				</tr>
+				<tr>
+				  <td>items</td>
+				  <td>	
+					Collection of items returned.
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Resource property</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>uniqueIdentifier(id, link)</td>
+								<td>The fixture unique identifier, containing resource id and the link to this resource.</td>	  
+							</tr>
+							<tr>
+								<td>featured</td>
+								<td>Is this game marked as a featured.</td>	  
+							</tr>
+							<tr>
+								<td>status</td>
+								<td>
+								<p>The fixture status.</p>
+								<p>Available statuses:</p>
+								<code>
+									/**<br/>
+									 * The game is created, may be in progress, but not yet completed.<br/>
+									 */<br/>
+									ACTIVE,<br/><br/>
+
+									/**<br/>
+									 * The game is successfully completed.<br/>
+									 */<br/>
+									COMPLETED,<br/><br/>
+
+									/**<br/>
+									 * The game is suspended for some reasons. May be suspended if in edit mode.<br/>
+									 */<br/>
+									SUSPENDED,<br/><br/>
+
+									/**<br/>
+									 * The game is postponed.<br/>
+									 */<br/>
+									POSTPONED,<br/><br/>
+
+									/**<br/>
+									 * The game is canceled.<br/>
+									 */<br/>
+									CANCELED
+								</code>	
+								
+								</td>	  
+							</tr>
+							<tr>
+								<td>gameDate</td>
+								<td>The fixture event date and time. Time format: <code>yyyy-MM-dd'T'HH:mm:ss.SSS zzz</code></td>	  
+							</tr>
+							<tr>
+								<td>participant1</td>
+								<td>The first participant name.</td>	  
+							</tr>
+							<tr>
+								<td>participant2</td>
+								<td>The second participant name.</td>	  
+							</tr>
+							<tr>
+								<td>leagueName</td>
+								<td>The league name. Combination of league name and the season name.</td>	  
+							</tr>
+							<tr>
+								<td>groupName</td>
+								<td>The group name. All tree name is combined into a single group name.</td>	  
+							</tr>
+							<tr>
+								<td>sportTypeName</td>
+								<td>The sport type name.</td>	  
+							</tr>
+							<tr>
+								<td>sportTypeResourcePath</td>
+								<td>The link to sport type.</td>	  
+							</tr>
+							<tr>
+								<td>leagueResourcePath</td>
+								<td>The link to league resource.</td>	  
+							</tr>
+						</tbody>
+					</table>
+				  </td>	  
+				</tr>
+			  </tbody>
+			</table>
+			<h4>Response codes</h4>
+			<h4>Examples</h4>
+			<p>Request</p>
+			<p>GET <code>/fixtures?f=0&amp;p=10&amp;fetchType=NOT_STARTED</code></p>
+			<p>Response</p>
+			<pre>
+{
+   "total": 1,
+   "count": 1,
+   "pageSize": 10,
+   "currentPage": 0,
+   "items": [   {
+      "uniqueIdentifier":       {
+         "id": 64,
+         "link": "/fixtures/64"
+      },
+      "featured": false,
+      "status": "ACTIVE",
+      "gameDate": "2013-09-06T15:45:00.000 UTC",
+      "participant1": "Latvia",
+      "participant2": "Lithuania",
+      "leagueName": "Eurobasket 2013",
+      "groupName": "Round 1 / Group B",
+      "sportTypeName": "Basketball",
+      "sportTypeResourcePath":       {
+         "id": 2,
+         "link": "/sports/2"
+      },
+      "leagueResourcePath":       {
+         "id": 5,
+         "link": "/leagues/5"
+      }
+   }]
+}
+			</pre>
+			<!-- End of method-->
+			
+			
+			<!-- Start of method-->
+			<h3>Get concrete fixture</h3>
+			<p>Returns the details of selected fixture.</p>
+			<h4>Headers</h4>
+			<p>Custom accept header must be provided when requesting a fixture resource. It defines vendor name, API version and content type.</p>
+			<p><code>Accept: application/vnd.aracrown.v1+json</code></p>
+			<h4>Method</h4>
+			<p>GET <code>/fixtures/{id}</code></p>
+			<h4>Query parameters</h4>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>id</td>
+				  <td>The unique identifier of fixture to retrieve.</td>	  
+				</tr>
+			  </tbody>
+			</table>					 
+			<h4>Result</h4>
+			<p>Json object of elements is returned as a result to request.</p>
+			<table class="table table-hover">
+			  <thead>
+				<tr>
+				  <th>Name</th>
+				  <th>Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+								<td>uniqueIdentifier(id, link)</td>
+								<td>The fixture unique identifier, containing resource id and the link to this resource.</td>	  
+							</tr>
+							<tr>
+								<td>featured</td>
+								<td>Is this game marked as a featured.</td>	  
+							</tr>
+							<tr>
+								<td>status</td>
+								<td>
+								<p>The fixture status.</p>
+								<p>Available statuses:</p>
+								<code>
+									/**<br/>
+									 * The game is created, may be in progress, but not yet completed.<br/>
+									 */<br/>
+									ACTIVE,<br/><br/>
+
+									/**<br/>
+									 * The game is successfully completed.<br/>
+									 */<br/>
+									COMPLETED,<br/><br/>
+
+									/**<br/>
+									 * The game is suspended for some reasons. May be suspended if in edit mode.<br/>
+									 */<br/>
+									SUSPENDED,<br/><br/>
+
+									/**<br/>
+									 * The game is postponed.<br/>
+									 */<br/>
+									POSTPONED,<br/><br/>
+
+									/**<br/>
+									 * The game is canceled.<br/>
+									 */<br/>
+									CANCELED
+								</code>	
+								
+								</td>	  
+							</tr>
+							<tr>
+								<td>gameDate</td>
+								<td>The fixture event date and time. Time format: <code>yyyy-MM-dd'T'HH:mm:ss.SSS zzz</code></td>	  
+							</tr>
+							<tr>
+								<td>participant1</td>
+								<td>The first participant name.</td>	  
+							</tr>
+							<tr>
+								<td>participant2</td>
+								<td>The second participant name.</td>	  
+							</tr>
+							<tr>
+								<td>leagueName</td>
+								<td>The league name. Combination of league name and the season name.</td>	  
+							</tr>
+							<tr>
+								<td>groupName</td>
+								<td>The group name. All tree name is combined into a single group name.</td>	  
+							</tr>
+							<tr>
+								<td>sportTypeName</td>
+								<td>The sport type name.</td>	  
+							</tr>
+							<tr>
+								<td>sportTypeResourcePath</td>
+								<td>The link to sport type.</td>	  
+							</tr>
+							<tr>
+								<td>leagueResourcePath</td>
+								<td>The link to league resource.</td>	  
+							</tr>							
+			  </tbody>
+			</table>
+			<h4>Response codes</h4>
+			<h4>Examples</h4>
+			<p>Request</p>
+			<p>GET <code>/fixtures/51</code></p>
+			<p>Response</p>
+			<pre>
+{
+   "uniqueIdentifier":    {
+      "id": 51,
+      "link": "/fixtures/51"
+   },
+   "featured": false,
+   "status": "ACTIVE",
+   "gameDate": "2013-09-04T12:30:00.000 UTC",
+   "participant1": "Israel",
+   "participant2": "Great Britain",
+   "leagueName": "Eurobasket 2013",
+   "groupName": "Round 1 / Group A",
+   "sportTypeName": "Basketball",
+   "sportTypeResourcePath":    {
+      "id": 2,
+      "link": "/sports/2"
+   },
+   "leagueResourcePath":    {
+      "id": 5,
+      "link": "/leagues/5"
+   }
+}
+			</pre>
+			<!-- End of method-->
+			
+			<!-- End of service-->
       </div><!--/row-->
       <hr>
       <div class="navbar" >
