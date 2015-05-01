@@ -1,12 +1,14 @@
 ---
 layout: post
 title: Java EE application configuration using Aeonbits Owner
-subtitle: 
-date: 2015-05-01
+subtitle: null
+date: {}
 author: vr
 "header-img": "img/post-bg-01.jpg"
 published: true
 ---
+
+<p>TBD</p>
 
 <p>Every (almost) Java EE based application needs configuration — local, test or production — it does not matter. What matters — how easily this configuration solution is maintained and how easily the environment may be changed.</p>
 
