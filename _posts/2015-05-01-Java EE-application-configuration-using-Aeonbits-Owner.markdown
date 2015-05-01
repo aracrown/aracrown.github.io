@@ -8,7 +8,7 @@ author: vr
 published: true
 ---
 
-<p>TBD</p>
+TBD
 
 <p>Every (almost) Java EE based application needs configuration — local, test or production — it does not matter. What matters — how easily this configuration solution is maintained and how easily the environment may be changed.</p>
 
