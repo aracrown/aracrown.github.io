@@ -1,13 +1,13 @@
 # Site settings
-title: ARA Crown Dev
+title: ARA Dev
 header-img: img/home-bg.jpg
 email: your-email@yourdomain.com
 description: "Write your site description here. It will be used as your sites meta description as well!"
 baseurl: ""
 url: "http://www.aracrown.org"
-twitter_username: SBootstrap
-github_username:  davidtmiller
-facebook_username:  IronSummitMedia
+twitter_username: aracrown
+github_username:  aracrown
+facebook_username:  aracrown
 
 # Build settings
 markdown: kramdown
