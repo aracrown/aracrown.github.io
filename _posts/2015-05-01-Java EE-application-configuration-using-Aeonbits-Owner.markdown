@@ -2,7 +2,7 @@
 layout: post
 title: Java EE application configuration using Aeonbits Owner
 subtitle: null
-date: {}
+date: 2015-05-01
 author: vr
 "header-img": "img/post-bg-01.jpg"
 published: true
