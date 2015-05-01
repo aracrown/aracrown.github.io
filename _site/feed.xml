@@ -5,13 +5,15 @@
     <description>Write your site description here. It will be used as your sites meta description as well!</description>
     <link>http://www.aracrown.org/</link>
     <atom:link href="http://www.aracrown.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 01 May 2015 10:36:02 +0300</pubDate>
-    <lastBuildDate>Fri, 01 May 2015 10:36:02 +0300</lastBuildDate>
+    <pubDate>Fri, 01 May 2015 10:43:48 +0300</pubDate>
+    <lastBuildDate>Fri, 01 May 2015 10:43:48 +0300</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
         <title>Java EE application configuration using Aeonbits Owner</title>
-        <description>&lt;p&gt;Every (almost) Java EE based application needs configuration — local, test or production — it does not matter. What matters — how easily this configuration solution is maintained and how easily the environment may be changed.&lt;/p&gt;
+        <description>&lt;p&gt;Not completed yet! ☺&lt;/p&gt;
+
+&lt;p&gt;Every (almost) Java EE based application needs configuration — local, test or production — it does not matter. What matters — how easily this configuration solution is maintained and how easily the environment may be changed.&lt;/p&gt;
 
 &lt;p&gt;There are many ways to achieve the requirement, however in this blog I will cover one of possible CDI based configuration solutions — Owner by http://owner.aeonbits.org/.&lt;/p&gt;
 

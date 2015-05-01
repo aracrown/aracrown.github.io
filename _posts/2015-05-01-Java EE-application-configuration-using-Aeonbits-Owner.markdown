@@ -8,6 +8,8 @@ author: vr
 published: true
 ---
 
+<p>Not completed yet! ☺</p>
+
 <p>Every (almost) Java EE based application needs configuration — local, test or production — it does not matter. What matters — how easily this configuration solution is maintained and how easily the environment may be changed.</p>
 
 <p>There are many ways to achieve the requirement, however in this blog I will cover one of possible CDI based configuration solutions — Owner by http://owner.aeonbits.org/.</p>
