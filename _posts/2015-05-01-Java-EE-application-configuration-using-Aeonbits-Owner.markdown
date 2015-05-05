@@ -4,7 +4,7 @@ title: Java EE application configuration using Aeonbits Owner
 category: configuration
 tags: cdi java-ee owner
 author: vr
-"header-img": "img/post-bg-01.jpg"
+"header-img": "img/1.png"
 published: true
 ---
 <p>
