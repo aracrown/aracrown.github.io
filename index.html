@@ -13,7 +13,6 @@ description: "java code snippets"
             {{ post.subtitle }}
         </h3>
         {% endif %}
-        <span class="category"><i class="icon-tag"></i> {{ post.categories | category_links }}</span><br/>
     </a>
     <p class="post-meta">Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}</p>
 </div>
@@ -35,17 +34,3 @@ description: "java code snippets"
     {% endif %}
 </ul>
 {% endif %}
-
-<ul>
-    {% for category in site.categories %}
-        <li>
-            <a href="/tags/{{category | first}}/">
-                {{category | first }}
-                <span class="badge">
-                <!-- Post count here -->
-                {{ category | last | size }}
-                </span>
-            </a>
-        </li>
-    {% endfor %} 
-</ul>
