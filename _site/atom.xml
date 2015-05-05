@@ -1,17 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>ara dev</title>
-    <description>Write your site description here. It will be used as your sites meta description as well!</description>
-    <link>http://www.aracrown.org/</link>
-    <atom:link href="http://www.aracrown.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 05 May 2015 21:56:47 +0300</pubDate>
-    <lastBuildDate>Tue, 05 May 2015 21:56:47 +0300</lastBuildDate>
-    <generator>Jekyll v2.5.3</generator>
-    
-      <item>
-        <title>Java EE application configuration using Aeonbits Owner</title>
-        <description>&lt;ul&gt;
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>Eric Jones</title>
+ <link href="http://www.aracrown.org/atom.xml" rel="self"/>
+ <link href="http://www.aracrown.org/"/>
+ <updated>2015-05-05T21:56:47+03:00</updated>
+ <id>http://erjjones.github.com</id>
+ <author>
+   <name>Eric Jones</name>
+ </author>
+ 
+ 
+ <entry>
+   <title>Java EE application configuration using Aeonbits Owner</title>
+   <link href="http://www.aracrown.org/blog/configuration/Java-EE-application-configuration-using-Aeonbits-Owner/"/>
+   <updated>2015-05-01T00:00:00+03:00</updated>
+   <id>http://www.aracrown.org/blog/configuration/Java-EE-application-configuration-using-Aeonbits-Owner</id>
+   <content type="html">&lt;ul&gt;
     		
         &lt;li&gt;&lt;a href=&quot;/tags/cdi&quot;&gt;cdi&lt;/a&gt;&lt;/li&gt;
     		
@@ -35,21 +40,8 @@
 
 &lt;p&gt;You need to manage property injection yourself;&lt;/p&gt;
 &lt;p&gt;You need to use Spring framework, which has flexible configuration management mechanism. But do you need Spring only for property loading? I believe — no ☺&lt;/p&gt;
-</description>
-        <pubDate>Fri, 01 May 2015 00:00:00 +0300</pubDate>
-        <link>http://www.aracrown.org/blog/configuration/Java-EE-application-configuration-using-Aeonbits-Owner/</link>
-        <guid isPermaLink="true">http://www.aracrown.org/blog/configuration/Java-EE-application-configuration-using-Aeonbits-Owner/</guid>
-        
-        <category>cdi</category>
-        
-        <category>java-ee</category>
-        
-        <category>owner</category>
-        
-        
-        <category>configuration</category>
-        
-      </item>
-    
-  </channel>
-</rss>
+</content>
+ </entry>
+ 
+ 
+</feed>

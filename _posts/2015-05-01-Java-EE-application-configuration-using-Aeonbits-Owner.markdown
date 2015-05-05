@@ -2,12 +2,21 @@
 layout: post
 title: Java EE application configuration using Aeonbits Owner
 subtitle: null
-date: 2015-05-01
+category: configuration
+tags: cdi java-ee owner
+year: 2015
+month: 05
+day: 02
 author: vr
 "header-img": "img/post-bg-01.jpg"
 published: true
 ---
 
+<ul>
+    {% for tag in site.tags %}		
+        <li><a href="/tags/{{ tag[0] }}">{{ tag[0] }}</a></li>
+    {% endfor %}
+</ul>
 <p>Not completed yet! ☺</p>
 
 
