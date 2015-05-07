@@ -14,6 +14,10 @@ layout: default
                     {% endif %}
                     <span class="meta">Posted by {% if page.author %}{{ page.author }}{% else %}{{ site.title }}{% endif %} on {{ page.date | date: "%B %-d, %Y" }}</span>
                 
+                	{% for tag in site.tags %}		
+                		<a href="/tags/{{ tag[0] }}"><span class="label label-success"><i class="fa fa-tag"></i> {{ tag[0] }}</span></a>
+				    {% endfor %}
+
                 	
 
                 </div>

@@ -5,8 +5,8 @@
     <description>Java EE architecture, design and development tips, hints, code snippets and other random ideas.</description>
     <link>http://www.aracrown.org/</link>
     <atom:link href="http://www.aracrown.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 06 May 2015 00:33:36 +0300</pubDate>
-    <lastBuildDate>Wed, 06 May 2015 00:33:36 +0300</lastBuildDate>
+    <pubDate>Thu, 07 May 2015 23:13:25 +0300</pubDate>
+    <lastBuildDate>Thu, 07 May 2015 23:13:25 +0300</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -25,6 +25,8 @@ Every (almost) Java EE based application needs configuration — local, test
         <category>java-ee</category>
         
         <category>owner</category>
+        
+        <category>configuration</category>
         
         
         <category>configuration</category>
