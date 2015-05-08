@@ -4,7 +4,7 @@
  <title>Eric Jones</title>
  <link href="http://www.aracrown.org/atom.xml" rel="self"/>
  <link href="http://www.aracrown.org/"/>
- <updated>2015-05-08T11:15:50+03:00</updated>
+ <updated>2015-05-08T13:35:11+03:00</updated>
  <id>http://erjjones.github.com</id>
  <author>
    <name>Eric Jones</name>
@@ -12,66 +12,330 @@
  
  
  <entry>
+   <title>Web application environment configuration using maven profiles</title>
+   <link href="http://www.aracrown.org/blog/configuration/Web-application-environment-configuration-using-maven-profiles/"/>
+   <updated>2015-05-11T00:00:00+03:00</updated>
+   <id>http://www.aracrown.org/blog/configuration/Web-application-environment-configuration-using-maven-profiles</id>
+   <content type="html">&lt;p&gt;
+Ok, this bog will be short. I will just share some small maven code snippets to configure your build and development IDE environment.
+
+&lt;/p&gt;
+
+&lt;p&gt;
+For some projects there is a need to use specific environment properties, which may differ from deployment environment.
+Let&#39;s say in your IDE you use &lt;em&gt;&quot;Development&quot;&lt;/em&gt; mode, however it is obvious that test, QA and production environments will use &lt;em&gt;&quot;Deployment&quot;&lt;/em&gt; mode.
+&lt;/p&gt;
+&lt;p&gt;
+Usually such property is stored in &lt;strong&gt;web.xml&lt;/strong&gt; file, for example:
+&lt;/p&gt;
+
+&lt;pre&gt;
+&amp;lt;context-param&amp;gt;
+    &amp;lt;param-name&amp;gt;javax.faces.PROJECT_STAGE&amp;lt;/param-name&amp;gt;
+    &amp;lt;param-value&amp;gt;${jsf.projectStage}&amp;lt;/param-value&amp;gt;
+&amp;lt;/context-param&amp;gt;
+&lt;/pre&gt;
+
+&lt;h3&gt;Issue&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+We do not want to commit &lt;em&gt;&quot;Development&quot;&lt;/em&gt; mode into source control.
+&lt;/li&gt;
+&lt;li&gt;
+We do not want to use &lt;em&gt;&quot;Deployment&quot;&lt;/em&gt; mode in our local IDE.
+&lt;/li&gt;
+&lt;li&gt;
+We do not want to have uncommitted changes if using &lt;em&gt;&quot;Development&quot;&lt;/em&gt; mode locally.
+&lt;/li&gt;
+&lt;li&gt;
+We DO want properly running local environment :) Sure!
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;
+By default property &lt;em&gt;${jsf.projectStage}&lt;/em&gt; is not properly understood by IDE (at least Eclipse WTP) and is not transformed into real value. Well, maybe it should be a nice feature...
+However, if you are using &lt;a href=&quot;http://maven.apache.org/&quot; data-href=&quot;http://maven.apache.org/&quot; rel=&quot;nofollow&quot;&gt;Apache Maven&lt;/a&gt; then this can be easily fixed.
+&lt;/p&gt;
+
+&lt;h3&gt;Talks and documentation&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;a href=&quot;http://maven.apache.org/guides/introduction/introduction-to-profiles.html&quot; rel=&quot;nofollow&quot;&gt;
+Introduction to Build Profiles
+&lt;/a&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;a href=&quot;http://stackoverflow.com/questions/28861267/eclipse-maven-profile-ignored&quot; rel=&quot;nofollow&quot;&gt;
+Eclipse + maven : profile ignored 
+&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+And the solution is on &lt;a href=&quot;http://stackoverflow.com/&quot; rel=&quot;nofollow&quot;&gt;stackoverflow&lt;/a&gt; described as well, however i could not find the link to it anymore when writing this blog :) I hope you will share this link with me :)
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;Preconditions&lt;/h3&gt;
+
+&lt;p&gt;You need this environment setup in order to successfully complete the provided guide:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&quot;http://maven.apache.org/&quot; data-href=&quot;http://maven.apache.org/&quot; rel=&quot;nofollow&quot;&gt;Apache Maven 3.x&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&quot;http://www.eclipse.org/downloads/&quot; data-href=&quot;http://www.eclipse.org/downloads/&quot; rel=&quot;nofollow&quot;&gt;Eclipse
+Luna&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;
+So far everything is about your &lt;strong&gt;pom.xml&lt;/strong&gt; file configuration.
+You need to tell maven what resources should be filtered. Also tell maven which property file to use for resource filtering. 
+And resolve this property file name dynamically using &lt;em&gt;filter.name&lt;/em&gt; maven property.
+&lt;/p&gt;
+
+&lt;pre&gt;
+&amp;lt;build&amp;gt;
+    &amp;lt;!-- Add filter file name --&amp;gt;
+    &amp;lt;filters&amp;gt;
+        &amp;lt;filter&amp;gt;${basedir}/src/main/filters/${filter.name}.properties&amp;lt;/filter&amp;gt;
+    &amp;lt;/filters&amp;gt;
+
+    &amp;lt;plugins&amp;gt;
+        &amp;lt;!--  Define filtered resources --&amp;gt;
+        &amp;lt;plugin&amp;gt;
+            &amp;lt;artifactId&amp;gt;maven-war-plugin&amp;lt;/artifactId&amp;gt;
+            &amp;lt;version&amp;gt;2.1.1&amp;lt;/version&amp;gt;
+            &amp;lt;configuration&amp;gt;
+                &amp;lt;failOnMissingWebXml&amp;gt;false&amp;lt;/failOnMissingWebXml&amp;gt;
+                &amp;lt;webResources&amp;gt;
+                    &amp;lt;resource&amp;gt;
+                        &amp;lt;directory&amp;gt;${basedir}/src/main/webapp&amp;lt;/directory&amp;gt;
+                        &amp;lt;filtering&amp;gt;true&amp;lt;/filtering&amp;gt;
+                        &amp;lt;includes&amp;gt;
+                            &amp;lt;include&amp;gt;WEB-INF/web.xml&amp;lt;/include&amp;gt;
+                            &amp;lt;include&amp;gt;WEB-INF/jboss-web.xml&amp;lt;/include&amp;gt;
+                        &amp;lt;/includes&amp;gt;
+                    &amp;lt;/resource&amp;gt;
+                &amp;lt;/webResources&amp;gt;
+            &amp;lt;/configuration&amp;gt;
+        &amp;lt;/plugin&amp;gt;
+    &amp;lt;/plugins&amp;gt;
+&amp;lt;/build&amp;gt;
+&lt;/pre&gt;
+
+&lt;p&gt;
+Then define different profiles you will need. And tell each profile which property file should be applied (&lt;strong&gt;&amp;lt;filter.name&amp;gt;production&amp;lt;/filter.name&amp;gt;&lt;/strong&gt;).
+&lt;/p&gt;
+
+&lt;pre&gt;
+&amp;lt;profiles&amp;gt;
+    &amp;lt;profile&amp;gt;
+        &amp;lt;id&amp;gt;default&amp;lt;/id&amp;gt;
+        &amp;lt;activation&amp;gt;
+            &amp;lt;activeByDefault&amp;gt;true&amp;lt;/activeByDefault&amp;gt;
+        &amp;lt;/activation&amp;gt;
+    &amp;lt;/profile&amp;gt;
+    &amp;lt;profile&amp;gt;
+        &amp;lt;id&amp;gt;production&amp;lt;/id&amp;gt;
+        &amp;lt;properties&amp;gt;
+            &amp;lt;filter.name&amp;gt;production&amp;lt;/filter.name&amp;gt;
+        &amp;lt;/properties&amp;gt;
+    &amp;lt;/profile&amp;gt;
+&amp;lt;/profiles&amp;gt;
+&lt;/pre&gt;
+
+&lt;p&gt;
+But we would like to have a default configuration for local environment. Let&#39;s define it in &lt;strong&gt;pom.xml&lt;/strong&gt; as well.
+&lt;/p&gt;
+
+&lt;pre&gt;
+&amp;lt;properties&amp;gt;
+    &amp;lt;!-- Default name of file for filtering --&amp;gt;
+    &amp;lt;filter.name&amp;gt;localhost&amp;lt;/filter.name&amp;gt;
+&amp;lt;/properties&amp;gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Usage&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;
+Now, eclipse IDE should automatically resolve and use default properties when you import maven project.
+For continuous delivery and console based builds you might be using such command:
+&lt;/p&gt;
+
+&lt;pre&gt;
+mvn clean package -Pproduction
+&lt;/pre&gt;
+
+&lt;p&gt;
+&lt;b&gt;-P&lt;/b&gt; may be avoided if you want to use default properties, e.g. for development build.
+&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Properties file location&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;
+Yes, you may define your own property files location based on your project structure:
+&lt;/p&gt;
+
+&lt;pre&gt;
+&amp;lt;filters&amp;gt;
+ &amp;lt;filter&amp;gt;${basedir}/src/main/filters/${filter.name}.properties&amp;lt;/filter&amp;gt;
+&amp;lt;/filters&amp;gt;
+&lt;/pre&gt;
+
+&lt;h3&gt;Resources&lt;/h3&gt;
+
+&lt;ul&gt;&lt;li&gt;
+&lt;a href=&quot;https://github.com/aracrown/ara-blog-examples/tree/master/s01e02&quot; rel=&quot;nofollow&quot;&gt;Source in Git
+repository&lt;/a&gt;
+
+&lt;/li&gt;&lt;/ul&gt;
+
+&lt;p&gt;
+Hopefully you did enjoy reading!
+&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>Java EE application configuration using Aeonbits Owner</title>
    <link href="http://www.aracrown.org/blog/configuration/Java-EE-application-configuration-using-Aeonbits-Owner/"/>
    <updated>2015-05-01T00:00:00+03:00</updated>
    <id>http://www.aracrown.org/blog/configuration/Java-EE-application-configuration-using-Aeonbits-Owner</id>
-   <content type="html">&lt;p&gt;
-Every (almost) Java EE based application needs configuration — local, test or production — it does not matter. What matters — how easily this configuration solution is maintained and how easily the environment may be changed.
+   <content type="html">&lt;p&gt; 
+Every (almost) Java EE based application needs configuration — local, test or production — it does not matter. What matters — how easily this
+configuration solution is maintained and how easily the environment may be changed. 
+&lt;/p&gt;
+
+&lt;p&gt; 
+There are many ways to achieve the requirement, however in this blog I will cover one of possible CDI based configuration solutions — Owner by &lt;a href=&quot;http://owner.aeonbits.org/&quot;&gt;http://owner.aeonbits.org/&lt;/a&gt;. 
 &lt;/p&gt;
 
 &lt;p&gt;
-There are many ways to achieve the requirement, however in this blog I will cover one of possible CDI based configuration solutions — Owner by &lt;a href=&quot;http://owner.aeonbits.org/&quot;&gt;http://owner.aeonbits.org/&lt;/a&gt;.
+Usually there are several stages when properties used in production:
 &lt;/p&gt;
 
-&lt;p&gt;Usually there are several stages when properties used in production:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+Hardcoded properties (usually done by novice programmers, otherwise I would treat such properties as constants);&lt;/li&gt; &lt;li&gt;Properties file
+inside application war file (different properties configured during build time. It is not correct, because the same build cannot be deployed on
+different environments);
+&lt;/li&gt; 
+&lt;li&gt;
+Properties file stored in server file system (properties are independent from war and is environment
+specific).
+&lt;/li&gt;
+&lt;/ol&gt;
 
-&lt;ol&gt;&lt;li&gt;Hardcoded properties (usually done by novice programmers, otherwise I would treat such properties as constants);&lt;/li&gt;
-&lt;li&gt;Properties file inside application war file (different properties configured during build time. It is not correct, because the same build cannot be deployed on different environments);&lt;/li&gt;
-&lt;li&gt;Properties file stored in server file system (properties are independent from war and is environment specific).&lt;/li&gt;&lt;/ol&gt;
+&lt;p&gt;
+Java EE lacks easy configuration functionality. There are many discussions related to this topic
+&lt;/p&gt;
 
-&lt;p name=&quot;f8b8&quot; id=&quot;f8b8&quot; class=&quot;graf--p&quot;&gt;Java EE lacks easy configuration functionality. There are many discussions related to this topic (&lt;a href=&quot;http://www.adam-bien.com/roller/abien/entry/how_to_configure_java_ee&quot; data-href=&quot;http://www.adam-bien.com/roller/abien/entry/how_to_configure_java_ee&quot; class=&quot;markup--anchor markup--p-anchor&quot; rel=&quot;nofollow&quot;&gt;HOW TO CONFIGURE JAVA EE 6+ APPLICATIONS&amp;nbsp;…WITHOUT XML&lt;/a&gt;, &lt;a href=&quot;http://stackoverflow.com/questions/5335979/storing-and-editing-configuration-for-java-ee-applications&quot; data-href=&quot;http://stackoverflow.com/questions/5335979/storing-and-editing-configuration-for-java-ee-applications&quot; class=&quot;markup--anchor markup--p-anchor&quot; rel=&quot;nofollow&quot;&gt;Stack Overflow&lt;/a&gt;,&lt;a href=&quot;http://blog.eisele.net/2011/09/configure-java-ee-applications-or.html&quot; data-href=&quot;http://blog.eisele.net/2011/09/configure-java-ee-applications-or.html&quot; class=&quot;markup--anchor markup--p-anchor&quot; rel=&quot;nofollow&quot;&gt;Configure Java EE applications or “Putting Bien into practice”&lt;/a&gt; and more others), however they need custom actions to take into account:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;a href=&quot;http://www.adam-bien.com/roller/abien/entry/how_to_configure_java_ee&quot; data-href=&quot;http://www.adam-bien.com/roller/abien/entry/how_to_configure_java_ee&quot; rel=&quot;nofollow&quot;&gt;HOW TO
+CONFIGURE JAVA EE 6+ APPLICATIONS&amp;nbsp;…WITHOUT XML&lt;/a&gt;
+&lt;/li&gt;
 
-&lt;ul class=&quot;postList&quot;&gt;&lt;li name=&quot;09bc&quot; id=&quot;09bc&quot; class=&quot;graf--li&quot;&gt;You need to manage property injection yourself;&lt;/li&gt;&lt;li name=&quot;590b&quot; id=&quot;590b&quot; class=&quot;graf--li&quot;&gt;You need to use &lt;a href=&quot;http://projects.spring.io/spring-framework/&quot; data-href=&quot;http://projects.spring.io/spring-framework/&quot; class=&quot;markup--anchor markup--li-anchor&quot; rel=&quot;nofollow&quot;&gt;Spring framework&lt;/a&gt;, which has flexible configuration management mechanism. But do you need &lt;a href=&quot;http://projects.spring.io/spring-framework/&quot; data-href=&quot;http://projects.spring.io/spring-framework/&quot; class=&quot;markup--anchor markup--li-anchor&quot; rel=&quot;nofollow&quot;&gt;Spring&lt;/a&gt; only for property loading? I believe — no ☺&lt;/li&gt;&lt;/ul&gt;
+&lt;li&gt;
+&lt;a href=&quot;http://stackoverflow.com/questions/5335979/storing-and-editing-configuration-for-java-ee-applications&quot; data-href=&quot;http://stackoverflow.com/questions/5335979/storing-and-editing-configuration-for-java-ee-applications&quot; rel=&quot;nofollow&quot;&gt;Storing and editing configuration for Java EE applications at Stack Overflow&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&quot;http://blog.eisele.net/2011/09/configure-java-ee-applications-or.html&quot; data-href=&quot;http://blog.eisele.net/2011/09/configure-java-ee-applications-or.html&quot; rel=&quot;nofollow&quot;&gt;Configure
+Java EE applications or “Putting Bien into practice”&lt;/a&gt; and more others.
+&lt;/li&gt;
+&lt;/ol&gt;
 
-&lt;h3 name=&quot;0c34&quot; id=&quot;0c34&quot; class=&quot;graf--h3&quot;&gt;Preconditions&lt;/h3&gt;
+&lt;p&gt;
+However they need custom actions to take into account:
+&lt;/p&gt;
 
-&lt;p name=&quot;5710&quot; id=&quot;5710&quot; class=&quot;graf--p&quot;&gt;You need this environment setup in order to successfully complete the provided guide:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+You need to manage property injection yourself;
+&lt;/li&gt;
+&lt;li&gt;
+You need to use &lt;a href=&quot;http://projects.spring.io/spring-framework/&quot; data-href=&quot;http://projects.spring.io/spring-framework/&quot; rel=&quot;nofollow&quot;&gt;Spring framework&lt;/a&gt;, which has flexible configuration management mechanism. But do you need
+&lt;a href=&quot;http://projects.spring.io/spring-framework/&quot; data-href=&quot;http://projects.spring.io/spring-framework/&quot; rel=&quot;nofollow&quot;&gt;Spring&lt;/a&gt; only for property loading? I believe — no ☺
+&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;ul class=&quot;postList&quot;&gt;&lt;li name=&quot;415d&quot; id=&quot;415d&quot; class=&quot;graf--li&quot;&gt;&lt;a href=&quot;http://maven.apache.org/&quot; data-href=&quot;http://maven.apache.org/&quot; class=&quot;markup--anchor markup--li-anchor&quot; rel=&quot;nofollow&quot;&gt;Apache Maven 3.x&lt;/a&gt;&lt;/li&gt;&lt;li name=&quot;7496&quot; id=&quot;7496&quot; class=&quot;graf--li&quot;&gt;&lt;a href=&quot;http://www.eclipse.org/downloads/&quot; data-href=&quot;http://www.eclipse.org/downloads/&quot; class=&quot;markup--anchor markup--li-anchor&quot; rel=&quot;nofollow&quot;&gt;Eclipse Luna&lt;/a&gt;&lt;/li&gt;&lt;li name=&quot;e391&quot; id=&quot;e391&quot; class=&quot;graf--li&quot;&gt;Java EE 7 profile&lt;/li&gt;&lt;li name=&quot;4086&quot; id=&quot;4086&quot; class=&quot;graf--li&quot;&gt;&lt;a href=&quot;http://owner.aeonbits.org/&quot; data-href=&quot;http://owner.aeonbits.org/&quot; class=&quot;markup--anchor markup--li-anchor&quot; rel=&quot;nofollow&quot;&gt;&lt;strong class=&quot;markup--strong markup--li-strong&quot;&gt;Aeonbits Owner&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;h3&gt;Preconditions&lt;/h3&gt;
+
+&lt;p&gt;You need this environment setup in order to successfully complete the provided guide:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&quot;http://maven.apache.org/&quot; data-href=&quot;http://maven.apache.org/&quot; rel=&quot;nofollow&quot;&gt;Apache Maven 3.x&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&quot;http://www.eclipse.org/downloads/&quot; data-href=&quot;http://www.eclipse.org/downloads/&quot; rel=&quot;nofollow&quot;&gt;Eclipse
+Luna&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+Java EE 7 profile
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&quot;http://owner.aeonbits.org/&quot; data-href=&quot;http://owner.aeonbits.org/&quot; rel=&quot;nofollow&quot;&gt;&lt;strong&gt;Aeonbits Owner&lt;/strong&gt;&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h3&gt;Implementation&lt;/h3&gt;
 
-&lt;p name=&quot;a2da&quot; id=&quot;a2da&quot; class=&quot;graf--p&quot;&gt;&lt;strong class=&quot;markup--strong markup--p-strong&quot;&gt;Defining an interface&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Defining an interface&lt;/strong&gt;&lt;/p&gt;
 
-&lt;pre name=&quot;f10c&quot; id=&quot;f10c&quot; class=&quot;graf--pre&quot;&gt;/**&lt;br /&gt; * Application configuration properties are defined here.&lt;br /&gt; * &lt;br /&gt; * &lt;a href=&quot;http://twitter.com/author&quot; data-href=&quot;http://twitter.com/author&quot; class=&quot;markup--anchor markup--pre-anchor&quot; title=&quot;Twitter profile for @author&quot; rel=&quot;nofollow&quot;&gt;@author&lt;/a&gt; vicento.ramos&lt;br /&gt; *&lt;br /&gt; */&lt;br /&gt;&lt;a href=&quot;http://twitter.com/HotReload&quot; data-href=&quot;http://twitter.com/HotReload&quot; class=&quot;markup--anchor markup--pre-anchor&quot; title=&quot;Twitter profile for @HotReload&quot; rel=&quot;nofollow&quot;&gt;@HotReload&lt;/a&gt;&lt;br /&gt;&lt;a href=&quot;http://twitter.com/Sources&quot; data-href=&quot;http://twitter.com/Sources&quot; class=&quot;markup--anchor markup--pre-anchor&quot; title=&quot;Twitter profile for @Sources&quot; rel=&quot;nofollow&quot;&gt;@Sources&lt;/a&gt;({ “file:/etc/my-app.properties”, “file:~/.my-app.properties”, “classpath:/my-app.properties” })&lt;br /&gt;&lt;a href=&quot;http://twitter.com/Named&quot; data-href=&quot;http://twitter.com/Named&quot; class=&quot;markup--anchor markup--pre-anchor&quot; title=&quot;Twitter profile for @Named&quot; rel=&quot;nofollow&quot;&gt;@Named&lt;/a&gt;(“applicationConfig”)&lt;br /&gt;public interface ApplicationConfig extends Accessible {&lt;br /&gt; &lt;a href=&quot;http://twitter.com/DefaultValue&quot; data-href=&quot;http://twitter.com/DefaultValue&quot; class=&quot;markup--anchor markup--pre-anchor&quot; title=&quot;Twitter profile for @DefaultValue&quot; rel=&quot;nofollow&quot;&gt;@DefaultValue&lt;/a&gt;(“50”)&lt;br /&gt; &lt;a href=&quot;http://twitter.com/Key&quot; data-href=&quot;http://twitter.com/Key&quot; class=&quot;markup--anchor markup--pre-anchor&quot; title=&quot;Twitter profile for @Key&quot; rel=&quot;nofollow&quot;&gt;@Key&lt;/a&gt;(“app.timeout”)&lt;br /&gt; int getInitialTimeout();&lt;br /&gt;}&lt;/pre&gt;
+&lt;pre&gt;
+/**&lt;br /&gt; * Application configuration properties are defined here.&lt;br /&gt; * &lt;br /&gt; * &lt;a href=&quot;http://twitter.com/author&quot; data-href=&quot;http://twitter.com/author&quot; title=&quot;Twitter profile for @author&quot; rel=&quot;nofollow&quot;&gt;@author&lt;/a&gt; vicento.ramos&lt;br /&gt; *&lt;br /&gt; */&lt;br /&gt;&lt;a href=&quot;http://twitter.com/HotReload&quot; data-href=&quot;http://twitter.com/HotReload&quot; title=&quot;Twitter profile for @HotReload&quot; rel=&quot;nofollow&quot;&gt;@HotReload&lt;/a&gt;&lt;br /&gt;&lt;a href=&quot;http://twitter.com/Sources&quot; data-href=&quot;http://twitter.com/Sources&quot; title=&quot;Twitter profile for @Sources&quot; rel=&quot;nofollow&quot;&gt;@Sources&lt;/a&gt;({
+“file:/etc/my-app.properties”, “file:~/.my-app.properties”, “classpath:/my-app.properties” })&lt;br /&gt;&lt;a href=&quot;http://twitter.com/Named&quot; data-href=&quot;http://twitter.com/Named&quot; title=&quot;Twitter profile for @Named&quot; rel=&quot;nofollow&quot;&gt;@Named&lt;/a&gt;(“applicationConfig”)&lt;br /&gt;public interface ApplicationConfig extends Accessible {&lt;br /&gt; &lt;a href=&quot;http://twitter.com/DefaultValue&quot; data-href=&quot;http://twitter.com/DefaultValue&quot; title=&quot;Twitter profile
+for @DefaultValue&quot; rel=&quot;nofollow&quot;&gt;@DefaultValue&lt;/a&gt;(“50”)&lt;br /&gt; &lt;a href=&quot;http://twitter.com/Key&quot; data-href=&quot;http://twitter.com/Key&quot; title=&quot;Twitter profile for @Key&quot; rel=&quot;nofollow&quot;&gt;@Key&lt;/a&gt;(“app.timeout”)&lt;br /&gt; int
+getInitialTimeout();&lt;br /&gt;}
+&lt;/pre&gt;
 
-&lt;p name=&quot;bc75&quot; id=&quot;bc75&quot; class=&quot;graf--p&quot;&gt;&lt;strong class=&quot;markup--strong markup--p-strong&quot;&gt;Creating a producer&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Creating a producer&lt;/strong&gt;&lt;/p&gt;
 
-&lt;pre name=&quot;9ff1&quot; id=&quot;9ff1&quot; class=&quot;graf--pre&quot;&gt;/**&lt;br /&gt; * Application scope based configuration file producer.&lt;br /&gt; * &lt;br /&gt; * &lt;a href=&quot;http://twitter.com/author&quot; data-href=&quot;http://twitter.com/author&quot; class=&quot;markup--anchor markup--pre-anchor&quot; title=&quot;Twitter profile for @author&quot; rel=&quot;nofollow&quot;&gt;@author&lt;/a&gt; vicento.ramos&lt;br /&gt; *&lt;br /&gt; */&lt;br /&gt;&lt;a href=&quot;http://twitter.com/ApplicationScoped&quot; data-href=&quot;http://twitter.com/ApplicationScoped&quot; class=&quot;markup--anchor markup--pre-anchor&quot; title=&quot;Twitter profile for @ApplicationScoped&quot; rel=&quot;nofollow&quot;&gt;@ApplicationScoped&lt;/a&gt;&lt;br /&gt;public class ApplicationConfigProducer {&lt;br /&gt; &lt;a href=&quot;http://twitter.com/Produces&quot; data-href=&quot;http://twitter.com/Produces&quot; class=&quot;markup--anchor markup--pre-anchor&quot; title=&quot;Twitter profile for @Produces&quot; rel=&quot;nofollow&quot;&gt;@Produces&lt;/a&gt;&lt;br /&gt; &lt;a href=&quot;http://twitter.com/ApplicationScoped&quot; data-href=&quot;http://twitter.com/ApplicationScoped&quot; class=&quot;markup--anchor markup--pre-anchor&quot; title=&quot;Twitter profile for @ApplicationScoped&quot; rel=&quot;nofollow&quot;&gt;@ApplicationScoped&lt;/a&gt;&lt;br /&gt; public ApplicationConfig produceSportsConfig() {&lt;br /&gt; return ConfigFactory.create(ApplicationConfig.class);&lt;br /&gt; }&lt;br /&gt;}&lt;/pre&gt;
+&lt;pre&gt;
+/**&lt;br /&gt; * Application scope based configuration file producer.&lt;br /&gt; * &lt;br /&gt; * &lt;a href=&quot;http://twitter.com/author&quot; data-href=&quot;http://twitter.com/author&quot; title=&quot;Twitter profile for @author&quot; rel=&quot;nofollow&quot;&gt;@author&lt;/a&gt; vicento.ramos&lt;br /&gt; *&lt;br /&gt; */&lt;br /&gt;&lt;a href=&quot;http://twitter.com/ApplicationScoped&quot; data-href=&quot;http://twitter.com/ApplicationScoped&quot; title=&quot;Twitter profile for @ApplicationScoped&quot; rel=&quot;nofollow&quot;&gt;@ApplicationScoped&lt;/a&gt;&lt;br /&gt;public class ApplicationConfigProducer {&lt;br /&gt; &lt;a href=&quot;http://twitter.com/Produces&quot; data-href=&quot;http://twitter.com/Produces&quot; title=&quot;Twitter profile for @Produces&quot; rel=&quot;nofollow&quot;&gt;@Produces&lt;/a&gt;&lt;br /&gt; &lt;a href=&quot;http://twitter.com/ApplicationScoped&quot; data-href=&quot;http://twitter.com/ApplicationScoped&quot; title=&quot;Twitter profile for @ApplicationScoped&quot; rel=&quot;nofollow&quot;&gt;@ApplicationScoped&lt;/a&gt;&lt;br /&gt; public ApplicationConfig
+produceSportsConfig() {&lt;br /&gt; return ConfigFactory.create(ApplicationConfig.class);&lt;br /&gt; }&lt;br /&gt;}
+&lt;/pre&gt;
 
-&lt;p name=&quot;220a&quot; id=&quot;220a&quot; class=&quot;graf--p&quot;&gt;&lt;strong class=&quot;markup--strong markup--p-strong&quot;&gt;Creating a properties file&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Creating a properties file&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p name=&quot;fb3a&quot; id=&quot;fb3a&quot; class=&quot;graf--p&quot;&gt;&lt;strong class=&quot;markup--strong markup--p-strong&quot;&gt;my-app.properties &lt;/strong&gt;file may be stored in one of these locations:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;my-app.properties &lt;/strong&gt;file may be stored in one of these
+locations:&lt;/p&gt;
 
-&lt;ul class=&quot;postList&quot;&gt;&lt;li name=&quot;0689&quot; id=&quot;0689&quot; class=&quot;graf--li&quot;&gt;/etc/my-app.properties&lt;/li&gt;&lt;li name=&quot;7b13&quot; id=&quot;7b13&quot; class=&quot;graf--li&quot;&gt;.my-app.properties&lt;/li&gt;&lt;li name=&quot;b1cd&quot; id=&quot;b1cd&quot; class=&quot;graf--li&quot;&gt;/my-app.properties&lt;/li&gt;&lt;/ul&gt;
-
-&lt;pre name=&quot;09f8&quot; id=&quot;09f8&quot; class=&quot;graf--pre&quot;&gt;app.timeout=30&lt;/pre&gt;
-
-&lt;p name=&quot;d030&quot; id=&quot;d030&quot; class=&quot;graf--p&quot;&gt;&lt;strong class=&quot;markup--strong markup--p-strong&quot;&gt;Usage&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre name=&quot;2797&quot; id=&quot;2797&quot; class=&quot;graf--pre&quot;&gt;/**&lt;br /&gt; * Sample injection point of properties.&lt;br /&gt; * &lt;br /&gt; * &lt;a href=&quot;http://twitter.com/author&quot; data-href=&quot;http://twitter.com/author&quot; class=&quot;markup--anchor markup--pre-anchor&quot; title=&quot;Twitter profile for @author&quot; rel=&quot;nofollow&quot;&gt;@author&lt;/a&gt; vicento.ramos&lt;br /&gt; *&lt;br /&gt; */&lt;br /&gt;&lt;a href=&quot;http://twitter.com/Named&quot; data-href=&quot;http://twitter.com/Named&quot; class=&quot;markup--anchor markup--pre-anchor&quot; title=&quot;Twitter profile for @Named&quot; rel=&quot;nofollow&quot;&gt;@Named&lt;/a&gt;&lt;br /&gt;public class SampleService {&lt;br /&gt; &lt;a href=&quot;http://twitter.com/Inject&quot; data-href=&quot;http://twitter.com/Inject&quot; class=&quot;markup--anchor markup--pre-anchor&quot; title=&quot;Twitter profile for @Inject&quot; rel=&quot;nofollow&quot;&gt;@Inject&lt;/a&gt;&lt;br /&gt; private ApplicationConfig applicationConfig;&lt;br /&gt; &lt;br /&gt; public void method() {&lt;br /&gt; System.out.println(String.format(“Config value: %d”, applicationConfig.getInitialTimeout()));&lt;br /&gt; }&lt;br /&gt;}&lt;/pre&gt;
-
-&lt;h3 name=&quot;1b2b&quot; id=&quot;1b2b&quot; class=&quot;graf--h3&quot;&gt;Features&lt;/h3&gt;
-
-&lt;ul class=&quot;postList&quot;&gt;&lt;li name=&quot;911f&quot; id=&quot;911f&quot; class=&quot;graf--li&quot;&gt;Multiple configuration locations — you may configure multiple lookup locations where configuration files may be fetched from;&lt;/li&gt;&lt;li name=&quot;e12d&quot; id=&quot;e12d&quot; class=&quot;graf--li&quot;&gt;CDI Injection — Java EE based CDI injection using &lt;em class=&quot;markup--em markup--li-em&quot;&gt;@Named&lt;/em&gt; and &lt;em class=&quot;markup--em markup--li-em&quot;&gt;@Inject &lt;/em&gt;annotation&lt;/li&gt;&lt;li name=&quot;7db0&quot; id=&quot;7db0&quot; class=&quot;graf--li&quot;&gt;Default values — you may configure default values easily using &lt;em class=&quot;markup--em markup--li-em&quot;&gt;@DefaultValue&lt;/em&gt;&lt;/li&gt;&lt;li name=&quot;5f93&quot; id=&quot;5f93&quot; class=&quot;graf--li&quot;&gt;Hot reload — you may easily define the interval for properties hot reloading using &lt;em class=&quot;markup--em markup--li-em&quot;&gt;@HotReload&lt;/em&gt;&lt;/li&gt;&lt;li name=&quot;e1da&quot; id=&quot;e1da&quot; class=&quot;graf--li&quot;&gt;And many more if required&lt;/li&gt;&lt;/ul&gt;
-
-&lt;h3 name=&quot;4f38&quot; id=&quot;4f38&quot; class=&quot;graf--h3&quot;&gt;Resources&lt;/h3&gt;
-
-&lt;ul class=&quot;postList&quot;&gt;&lt;li name=&quot;2a0e&quot; id=&quot;2a0e&quot; class=&quot;graf--li graf--last&quot;&gt;&lt;a href=&quot;https://github.com/aracrown/ara-blog-examples/tree/master/s01e01&quot; data-href=&quot;https://github.com/aracrown/ara-blog-examples/tree/master/s01e01&quot; class=&quot;markup--anchor markup--li-anchor&quot; rel=&quot;nofollow&quot;&gt;Source in Git repository&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;/etc/my-app.properties&lt;/li&gt;
+&lt;li&gt;.my-app.properties&lt;/li&gt;
+&lt;li&gt;/my-app.properties&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;
-&lt;/p&gt;
+And the content of the file:&lt;/p&gt;
+
+&lt;pre&gt;app.timeout=30&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Usage&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;/**&lt;br /&gt; * Sample injection point of properties.&lt;br /&gt; * &lt;br /&gt; * &lt;a href=&quot;http://twitter.com/author&quot; data-href=&quot;http://twitter.com/author&quot; title=&quot;Twitter profile for @author&quot; rel=&quot;nofollow&quot;&gt;@author&lt;/a&gt;
+vicento.ramos&lt;br /&gt; *&lt;br /&gt; */&lt;br /&gt;&lt;a href=&quot;http://twitter.com/Named&quot; data-href=&quot;http://twitter.com/Named&quot; title=&quot;Twitter profile for @Named&quot; rel=&quot;nofollow&quot;&gt;@Named&lt;/a&gt;&lt;br /&gt;public class SampleService {&lt;br /&gt; &lt;a href=&quot;http://twitter.com/Inject&quot; data-href=&quot;http://twitter.com/Inject&quot; title=&quot;Twitter profile for @Inject&quot; rel=&quot;nofollow&quot;&gt;@Inject&lt;/a&gt;&lt;br /&gt;
+private ApplicationConfig applicationConfig;&lt;br /&gt; &lt;br /&gt; public void method() {&lt;br /&gt; System.out.println(String.format(“Config value: %d”,
+applicationConfig.getInitialTimeout()));&lt;br /&gt; }&lt;br /&gt;}&lt;/pre&gt;
+
+&lt;h3&gt;Features&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Multiple configuration locations — you may configure multiple lookup locations where
+configuration files may be fetched from;&lt;/li&gt;
+&lt;li&gt;CDI Injection — Java EE based CDI injection using &lt;em&gt;@Named&lt;/em&gt; and &lt;em&gt;@Inject &lt;/em&gt;annotation&lt;/li&gt;&lt;li&gt;Default values — you may configure default values easily using &lt;em&gt;@DefaultValue&lt;/em&gt;&lt;/li&gt;&lt;li&gt;Hot reload — you may easily define the interval for properties hot reloading using 
+&lt;em&gt;@HotReload&lt;/em&gt;&lt;/li&gt;&lt;li&gt;And many more if required&lt;/li&gt;&lt;/ul&gt;
+
+&lt;h3&gt;Resources&lt;/h3&gt;
+
+&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://github.com/aracrown/ara-blog-examples/tree/master/s01e01&quot; data-href=&quot;https://github.com/aracrown/ara-blog-examples/tree/master/s01e01&quot; rel=&quot;nofollow&quot;&gt;Source in Git
+repository&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
 
 </content>
  </entry>

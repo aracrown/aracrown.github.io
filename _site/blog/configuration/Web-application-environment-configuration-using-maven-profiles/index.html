@@ -8,9 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Java EE architecture, design and development tips, hints, code snippets and other random ideas.">
 
-    <title>Java EE application configuration using Aeonbits Owner - ara dev</title>
+    <title>Web application environment configuration using maven profiles - ara dev</title>
 
-    <link rel="canonical" href="http://www.aracrown.org/blog/configuration/Java-EE-application-configuration-using-Aeonbits-Owner/">
+    <link rel="canonical" href="http://www.aracrown.org/blog/configuration/Web-application-environment-configuration-using-maven-profiles/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -64,9 +64,9 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>Java EE application configuration using Aeonbits Owner</h1>
+                    <h1>Web application environment configuration using maven profiles</h1>
                     
-                    <span class="meta">Posted by vr on May 1, 2015</span>
+                    <span class="meta">Posted by vr on May 11, 2015</span>
                 
                 			
                 		<a href="/tags/cdi"><span class="label label-success"><i class="fa fa-tag"></i> cdi</span></a>
@@ -96,63 +96,65 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-				<p> 
-Every (almost) Java EE based application needs configuration — local, test or production — it does not matter. What matters — how easily this
-configuration solution is maintained and how easily the environment may be changed. 
-</p>
+				<p>
+Ok, this bog will be short. I will just share some small maven code snippets to configure your build and development IDE environment.
 
-<p> 
-There are many ways to achieve the requirement, however in this blog I will cover one of possible CDI based configuration solutions — Owner by <a href="http://owner.aeonbits.org/">http://owner.aeonbits.org/</a>. 
 </p>
 
 <p>
-Usually there are several stages when properties used in production:
+For some projects there is a need to use specific environment properties, which may differ from deployment environment.
+Let's say in your IDE you use <em>"Development"</em> mode, however it is obvious that test, QA and production environments will use <em>"Deployment"</em> mode.
+</p>
+<p>
+Usually such property is stored in <strong>web.xml</strong> file, for example:
 </p>
 
+<pre>
+&lt;context-param&gt;
+    &lt;param-name&gt;javax.faces.PROJECT_STAGE&lt;/param-name&gt;
+    &lt;param-value&gt;${jsf.projectStage}&lt;/param-value&gt;
+&lt;/context-param&gt;
+</pre>
+
+<h3>Issue</h3>
 <ol>
 <li>
-Hardcoded properties (usually done by novice programmers, otherwise I would treat such properties as constants);</li> <li>Properties file
-inside application war file (different properties configured during build time. It is not correct, because the same build cannot be deployed on
-different environments);
-</li> 
+We do not want to commit <em>"Development"</em> mode into source control.
+</li>
 <li>
-Properties file stored in server file system (properties are independent from war and is environment
-specific).
+We do not want to use <em>"Deployment"</em> mode in our local IDE.
+</li>
+<li>
+We do not want to have uncommitted changes if using <em>"Development"</em> mode locally.
+</li>
+<li>
+We DO want properly running local environment :) Sure!
 </li>
 </ol>
 
 <p>
-Java EE lacks easy configuration functionality. There are many discussions related to this topic
+By default property <em>${jsf.projectStage}</em> is not properly understood by IDE (at least Eclipse WTP) and is not transformed into real value. Well, maybe it should be a nice feature...
+However, if you are using <a href="http://maven.apache.org/" data-href="http://maven.apache.org/" rel="nofollow">Apache Maven</a> then this can be easily fixed.
 </p>
+
+<h3>Talks and documentation</h3>
 
 <ol>
 <li>
-<a href="http://www.adam-bien.com/roller/abien/entry/how_to_configure_java_ee" data-href="http://www.adam-bien.com/roller/abien/entry/how_to_configure_java_ee" rel="nofollow">HOW TO
-CONFIGURE JAVA EE 6+ APPLICATIONS&nbsp;…WITHOUT XML</a>
+<a href="http://maven.apache.org/guides/introduction/introduction-to-profiles.html" rel="nofollow">
+Introduction to Build Profiles
+</a>
 </li>
 
 <li>
-<a href="http://stackoverflow.com/questions/5335979/storing-and-editing-configuration-for-java-ee-applications" data-href="http://stackoverflow.com/questions/5335979/storing-and-editing-configuration-for-java-ee-applications" rel="nofollow">Storing and editing configuration for Java EE applications at Stack Overflow</a>
+<a href="http://stackoverflow.com/questions/28861267/eclipse-maven-profile-ignored" rel="nofollow">
+Eclipse + maven : profile ignored 
+</a>
 </li>
 <li>
-<a href="http://blog.eisele.net/2011/09/configure-java-ee-applications-or.html" data-href="http://blog.eisele.net/2011/09/configure-java-ee-applications-or.html" rel="nofollow">Configure
-Java EE applications or “Putting Bien into practice”</a> and more others.
+And the solution is on <a href="http://stackoverflow.com/" rel="nofollow">stackoverflow</a> described as well, however i could not find the link to it anymore when writing this blog :) I hope you will share this link with me :)
 </li>
 </ol>
-
-<p>
-However they need custom actions to take into account:
-</p>
-
-<ul>
-<li>
-You need to manage property injection yourself;
-</li>
-<li>
-You need to use <a href="http://projects.spring.io/spring-framework/" data-href="http://projects.spring.io/spring-framework/" rel="nofollow">Spring framework</a>, which has flexible configuration management mechanism. But do you need
-<a href="http://projects.spring.io/spring-framework/" data-href="http://projects.spring.io/spring-framework/" rel="nofollow">Spring</a> only for property loading? I believe — no ☺
-</li>
-</ul>
 
 <h3>Preconditions</h3>
 
@@ -166,78 +168,125 @@ You need to use <a href="http://projects.spring.io/spring-framework/" data-href=
 <a href="http://www.eclipse.org/downloads/" data-href="http://www.eclipse.org/downloads/" rel="nofollow">Eclipse
 Luna</a>
 </li>
-<li>
-Java EE 7 profile
-</li>
-<li>
-<a href="http://owner.aeonbits.org/" data-href="http://owner.aeonbits.org/" rel="nofollow"><strong>Aeonbits Owner</strong></a>
-</li>
 </ul>
 
-<h3>Implementation</h3>
-
-<p><strong>Defining an interface</strong></p>
-
-<pre>
-/**<br /> * Application configuration properties are defined here.<br /> * <br /> * <a href="http://twitter.com/author" data-href="http://twitter.com/author" title="Twitter profile for @author" rel="nofollow">@author</a> vicento.ramos<br /> *<br /> */<br /><a href="http://twitter.com/HotReload" data-href="http://twitter.com/HotReload" title="Twitter profile for @HotReload" rel="nofollow">@HotReload</a><br /><a href="http://twitter.com/Sources" data-href="http://twitter.com/Sources" title="Twitter profile for @Sources" rel="nofollow">@Sources</a>({
-“file:/etc/my-app.properties”, “file:~/.my-app.properties”, “classpath:/my-app.properties” })<br /><a href="http://twitter.com/Named" data-href="http://twitter.com/Named" title="Twitter profile for @Named" rel="nofollow">@Named</a>(“applicationConfig”)<br />public interface ApplicationConfig extends Accessible {<br /> <a href="http://twitter.com/DefaultValue" data-href="http://twitter.com/DefaultValue" title="Twitter profile
-for @DefaultValue" rel="nofollow">@DefaultValue</a>(“50”)<br /> <a href="http://twitter.com/Key" data-href="http://twitter.com/Key" title="Twitter profile for @Key" rel="nofollow">@Key</a>(“app.timeout”)<br /> int
-getInitialTimeout();<br />}
-</pre>
-
-<p><strong>Creating a producer</strong></p>
-
-<pre>
-/**<br /> * Application scope based configuration file producer.<br /> * <br /> * <a href="http://twitter.com/author" data-href="http://twitter.com/author" title="Twitter profile for @author" rel="nofollow">@author</a> vicento.ramos<br /> *<br /> */<br /><a href="http://twitter.com/ApplicationScoped" data-href="http://twitter.com/ApplicationScoped" title="Twitter profile for @ApplicationScoped" rel="nofollow">@ApplicationScoped</a><br />public class ApplicationConfigProducer {<br /> <a href="http://twitter.com/Produces" data-href="http://twitter.com/Produces" title="Twitter profile for @Produces" rel="nofollow">@Produces</a><br /> <a href="http://twitter.com/ApplicationScoped" data-href="http://twitter.com/ApplicationScoped" title="Twitter profile for @ApplicationScoped" rel="nofollow">@ApplicationScoped</a><br /> public ApplicationConfig
-produceSportsConfig() {<br /> return ConfigFactory.create(ApplicationConfig.class);<br /> }<br />}
-</pre>
-
-<p><strong>Creating a properties file</strong></p>
-
-<p><strong>my-app.properties </strong>file may be stored in one of these
-locations:</p>
-
-<ul>
-<li>/etc/my-app.properties</li>
-<li>.my-app.properties</li>
-<li>/my-app.properties</li>
-</ul>
+<h3>Solution</h3>
 
 <p>
-And the content of the file:</p>
+So far everything is about your <strong>pom.xml</strong> file configuration.
+You need to tell maven what resources should be filtered. Also tell maven which property file to use for resource filtering. 
+And resolve this property file name dynamically using <em>filter.name</em> maven property.
+</p>
 
-<pre>app.timeout=30</pre>
+<pre>
+&lt;build&gt;
+    &lt;!-- Add filter file name --&gt;
+    &lt;filters&gt;
+        &lt;filter&gt;${basedir}/src/main/filters/${filter.name}.properties&lt;/filter&gt;
+    &lt;/filters&gt;
+
+    &lt;plugins&gt;
+        &lt;!--  Define filtered resources --&gt;
+        &lt;plugin&gt;
+            &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
+            &lt;version&gt;2.1.1&lt;/version&gt;
+            &lt;configuration&gt;
+                &lt;failOnMissingWebXml&gt;false&lt;/failOnMissingWebXml&gt;
+                &lt;webResources&gt;
+                    &lt;resource&gt;
+                        &lt;directory&gt;${basedir}/src/main/webapp&lt;/directory&gt;
+                        &lt;filtering&gt;true&lt;/filtering&gt;
+                        &lt;includes&gt;
+                            &lt;include&gt;WEB-INF/web.xml&lt;/include&gt;
+                            &lt;include&gt;WEB-INF/jboss-web.xml&lt;/include&gt;
+                        &lt;/includes&gt;
+                    &lt;/resource&gt;
+                &lt;/webResources&gt;
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;
+</pre>
+
+<p>
+Then define different profiles you will need. And tell each profile which property file should be applied (<strong>&lt;filter.name&gt;production&lt;/filter.name&gt;</strong>).
+</p>
+
+<pre>
+&lt;profiles&gt;
+    &lt;profile&gt;
+        &lt;id&gt;default&lt;/id&gt;
+        &lt;activation&gt;
+            &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+        &lt;/activation&gt;
+    &lt;/profile&gt;
+    &lt;profile&gt;
+        &lt;id&gt;production&lt;/id&gt;
+        &lt;properties&gt;
+            &lt;filter.name&gt;production&lt;/filter.name&gt;
+        &lt;/properties&gt;
+    &lt;/profile&gt;
+&lt;/profiles&gt;
+</pre>
+
+<p>
+But we would like to have a default configuration for local environment. Let's define it in <strong>pom.xml</strong> as well.
+</p>
+
+<pre>
+&lt;properties&gt;
+    &lt;!-- Default name of file for filtering --&gt;
+    &lt;filter.name&gt;localhost&lt;/filter.name&gt;
+&lt;/properties&gt;</pre>
 
 <p><strong>Usage</strong></p>
 
-<pre>/**<br /> * Sample injection point of properties.<br /> * <br /> * <a href="http://twitter.com/author" data-href="http://twitter.com/author" title="Twitter profile for @author" rel="nofollow">@author</a>
-vicento.ramos<br /> *<br /> */<br /><a href="http://twitter.com/Named" data-href="http://twitter.com/Named" title="Twitter profile for @Named" rel="nofollow">@Named</a><br />public class SampleService {<br /> <a href="http://twitter.com/Inject" data-href="http://twitter.com/Inject" title="Twitter profile for @Inject" rel="nofollow">@Inject</a><br />
-private ApplicationConfig applicationConfig;<br /> <br /> public void method() {<br /> System.out.println(String.format(“Config value: %d”,
-applicationConfig.getInitialTimeout()));<br /> }<br />}</pre>
+<p>
+Now, eclipse IDE should automatically resolve and use default properties when you import maven project.
+For continuous delivery and console based builds you might be using such command:
+</p>
 
-<h3>Features</h3>
+<pre>
+mvn clean package -Pproduction
+</pre>
 
-<ul>
-<li>Multiple configuration locations — you may configure multiple lookup locations where
-configuration files may be fetched from;</li>
-<li>CDI Injection — Java EE based CDI injection using <em>@Named</em> and <em>@Inject </em>annotation</li><li>Default values — you may configure default values easily using <em>@DefaultValue</em></li><li>Hot reload — you may easily define the interval for properties hot reloading using 
-<em>@HotReload</em></li><li>And many more if required</li></ul>
+<p>
+<b>-P</b> may be avoided if you want to use default properties, e.g. for development build.
+</p>
+
+<p><strong>Properties file location</strong></p>
+
+<p>
+Yes, you may define your own property files location based on your project structure:
+</p>
+
+<pre>
+&lt;filters&gt;
+ &lt;filter&gt;${basedir}/src/main/filters/${filter.name}.properties&lt;/filter&gt;
+&lt;/filters&gt;
+</pre>
 
 <h3>Resources</h3>
 
-<ul><li><a href="https://github.com/aracrown/ara-blog-examples/tree/master/s01e01" data-href="https://github.com/aracrown/ara-blog-examples/tree/master/s01e01" rel="nofollow">Source in Git
-repository</a></li></ul>
+<ul><li>
+<a href="https://github.com/aracrown/ara-blog-examples/tree/master/s01e02" rel="nofollow">Source in Git
+repository</a>
 
+</li></ul>
+
+<p>
+Hopefully you did enjoy reading!
+</p>
 
 
                 <hr>
 
                 <ul class="pager">
                     
-                    
-                    <li class="next">
-                        <a href="/blog/configuration/Web-application-environment-configuration-using-maven-profiles/" data-toggle="tooltip" data-placement="top" title="Web application environment configuration using maven profiles">Next Post &rarr;</a>
+                    <li class="previous">
+                        <a href="/blog/configuration/Java-EE-application-configuration-using-Aeonbits-Owner/" data-toggle="tooltip" data-placement="top" title="Java EE application configuration using Aeonbits Owner">&larr; Previous Post</a>
                     </li>
+                    
                     
                 </ul>
 
