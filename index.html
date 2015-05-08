@@ -15,7 +15,9 @@ description: "java code snippets"
         </h3>
         {% endif %}
     </a>
-    <p class="post-meta">Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}</p>
+    <p class="post-meta">Posted by {% if post.author %}
+    <a href="https://www.linkedin.com/in/vytasr" rel="nofollow">{{ post.author }}</a>
+    {% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}</p>
     {% for tag in post.tags %} <a href="/tags/{{ tag }}" title="View posts tagged with &quot;{{ tag }}&quot;"><span class="label label-success"><i class="fa fa-tag"></i> {{ tag }}</span></a>  {% if forloop.last != true %} {% endif %} {% endfor %} 
 						 
 </div>

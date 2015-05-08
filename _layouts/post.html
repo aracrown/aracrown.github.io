@@ -12,7 +12,9 @@ layout: default
                     {% if page.subtitle %}
                     <h2 class="subheading">{{ page.subtitle }}</h2>
                     {% endif %}
-                    <span class="meta">Posted by {% if page.author %}{{ page.author }}{% else %}{{ site.title }}{% endif %} on {{ page.date | date: "%B %-d, %Y" }}</span>
+                    <span class="meta">Posted by {% if page.author %}
+                    <a href="https://www.linkedin.com/in/vytasr" rel="nofollow">{{ page.author }}</a>
+                    {% else %}{{ site.title }}{% endif %} on {{ page.date | date: "%B %-d, %Y" }}</span>
                 
                 	
                 	{% for tag in page.tags %} <a href="/tags/{{ tag }}" title="View posts tagged with &quot;{{ tag }}&quot;"><span class="label label-success"><i class="fa fa-tag"></i> {{ tag }}</span></a>  {% if forloop.last != true %} {% endif %} {% endfor %} 
