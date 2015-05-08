@@ -4,7 +4,7 @@
  <title>Eric Jones</title>
  <link href="http://www.aracrown.org/atom.xml" rel="self"/>
  <link href="http://www.aracrown.org/"/>
- <updated>2015-05-08T13:35:11+03:00</updated>
+ <updated>2015-05-08T13:38:40+03:00</updated>
  <id>http://erjjones.github.com</id>
  <author>
    <name>Eric Jones</name>
@@ -13,9 +13,9 @@
  
  <entry>
    <title>Web application environment configuration using maven profiles</title>
-   <link href="http://www.aracrown.org/blog/configuration/Web-application-environment-configuration-using-maven-profiles/"/>
+   <link href="http://www.aracrown.org/blog/Web-application-environment-configuration-using-maven-profiles/"/>
    <updated>2015-05-11T00:00:00+03:00</updated>
-   <id>http://www.aracrown.org/blog/configuration/Web-application-environment-configuration-using-maven-profiles</id>
+   <id>http://www.aracrown.org/blog/Web-application-environment-configuration-using-maven-profiles</id>
    <content type="html">&lt;p&gt;
 Ok, this bog will be short. I will just share some small maven code snippets to configure your build and development IDE environment.
 

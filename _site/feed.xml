@@ -5,8 +5,8 @@
     <description>Java EE architecture, design and development tips, hints, code snippets and other random ideas.</description>
     <link>http://www.aracrown.org/</link>
     <atom:link href="http://www.aracrown.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 08 May 2015 13:35:11 +0300</pubDate>
-    <lastBuildDate>Fri, 08 May 2015 13:35:11 +0300</lastBuildDate>
+    <pubDate>Fri, 08 May 2015 13:38:40 +0300</pubDate>
+    <lastBuildDate>Fri, 08 May 2015 13:38:40 +0300</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -17,8 +17,8 @@ Ok, this bog will be short. I will just share some small maven code snippets to 
 
 </description>
         <pubDate>Mon, 11 May 2015 00:00:00 +0300</pubDate>
-        <link>http://www.aracrown.org/blog/configuration/Web-application-environment-configuration-using-maven-profiles/</link>
-        <guid isPermaLink="true">http://www.aracrown.org/blog/configuration/Web-application-environment-configuration-using-maven-profiles/</guid>
+        <link>http://www.aracrown.org/blog/Web-application-environment-configuration-using-maven-profiles/</link>
+        <guid isPermaLink="true">http://www.aracrown.org/blog/Web-application-environment-configuration-using-maven-profiles/</guid>
         
         <category>java-ee</category>
         
@@ -28,8 +28,6 @@ Ok, this bog will be short. I will just share some small maven code snippets to 
         
         <category>CD</category>
         
-        
-        <category>configuration</category>
         
       </item>
     

@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Web application environment configuration using maven profiles
-category: configuration
 tags: java-ee configuration maven CD
 author: vr
 "header-img": "img/1.png"
