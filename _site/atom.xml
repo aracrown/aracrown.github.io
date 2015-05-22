@@ -4,12 +4,204 @@
  <title>Eric Jones</title>
  <link href="http://www.aracrown.org/atom.xml" rel="self"/>
  <link href="http://www.aracrown.org/"/>
- <updated>2015-05-08T14:29:50+03:00</updated>
+ <updated>2015-05-22T14:40:17+03:00</updated>
  <id>http://erjjones.github.com</id>
  <author>
    <name>Eric Jones</name>
  </author>
  
+ 
+ <entry>
+   <title>Writing type-safe queries with QueryDSL</title>
+   <link href="http://www.aracrown.org/blog/Writing-type-safe-queries-with-QueryDSL/"/>
+   <updated>2015-05-22T00:00:00+03:00</updated>
+   <id>http://www.aracrown.org/blog/Writing-type-safe-queries-with-QueryDSL</id>
+   <content type="html">&lt;p&gt;
+I became a fan of type-safe queries long time ago (unless I need plain SQL queries via JDBC). What are type-safe queries and how easily they can be maintained? 
+&lt;a href=&quot;http://docs.oracle.com/javaee/7/tutorial/persistence-criteria001.htm#GJRIJ&quot; rel=&quot;nofollow&quot;&gt;Criteria&lt;/a&gt;, &lt;a href=&quot;http://www.querydsl.com/&quot; rel=&quot;nofollow&quot;&gt;QueryDSL&lt;/a&gt;, &lt;a href=&quot;http://www.jooq.org/&quot; rel=&quot;nofollow&quot;&gt;JOOQ&lt;/a&gt;? This post is not about which framework is the best one. 
+It’s about how easily implement JPA queries using 
+&lt;a href=&quot;http://www.querydsl.com/&quot; rel=&quot;nofollow&quot;&gt;QueryDSL&lt;/a&gt;.
+
+&lt;/p&gt;
+
+&lt;p&gt;
+I believe &lt;a href=&quot;http://www.jooq.org/&quot; rel=&quot;nofollow&quot;&gt;JOOQ&lt;/a&gt; is a great framework for plain SQL based environments, however my main work is based on JPA environments, 
+so I chose &lt;a href=&quot;http://www.querydsl.com/&quot; rel=&quot;nofollow&quot;&gt;QueryDSL&lt;/a&gt;. Why not the standard - &lt;a href=&quot;http://docs.oracle.com/javaee/7/tutorial/persistence-criteria001.htm#GJRIJ&quot; rel=&quot;nofollow&quot;&gt;Criteria&lt;/a&gt;? Due to it’s complexity. I always try to make things simple, 
+and using &lt;a href=&quot;http://docs.oracle.com/javaee/7/tutorial/persistence-criteria001.htm#GJRIJ&quot; rel=&quot;nofollow&quot;&gt;Criteria&lt;/a&gt; is not the case. 
+
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;a href=&quot;https://docs.oracle.com/javaee/7/tutorial/persistence-querylanguage.htm#BNBTG&quot; rel=&quot;nofollow&quot;&gt;JPQL&lt;/a&gt; is great to develop things fast, but maintenance is slow when you change your entity structure. And you do not see the issues 
+unless you know the code by heart. But what if that code is not written by you? Unit tests - true, but sometimes the life is not so 
+easy as we would like it to be :) In that case &lt;a href=&quot;http://www.querydsl.com/&quot; rel=&quot;nofollow&quot;&gt;QueryDSL&lt;/a&gt; gives you some advantage to trace the appearing query issues easily during 
+compile time.  It does not solve all your issues, but at least it minimizes them :) 
+
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;b&gt;Concerns:&lt;/b&gt; Tim has left &lt;a href=&quot;http://www.mysema.com/&quot; rel=&quot;nofollow&quot;&gt;Mysema&lt;/a&gt;, however I believe he will continue to support &lt;a href=&quot;http://www.querydsl.com/&quot; rel=&quot;nofollow&quot;&gt;QueryDSL&lt;/a&gt; project!
+
+&lt;/p&gt;
+
+&lt;h3&gt;Preconditions&lt;/h3&gt;
+
+&lt;p&gt;
+You need this environment setup in order to successfully complete the provided guide:
+&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://maven.apache.org/&quot; rel=&quot;nofollow&quot;&gt;Apache Maven 3.x&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.eclipse.org/downloads/&quot; rel=&quot;nofollow&quot;&gt;Eclipse Luna&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.querydsl.com/&quot; rel=&quot;nofollow&quot;&gt;QueryDSL&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;JPA model&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Issue&lt;/h3&gt;
+
+&lt;p&gt;
+The main issue here is the complexity of Criteria API in order to create a JPA type-safe query. I am able to write a fast query using 
+&lt;a href=&quot;https://docs.oracle.com/javaee/7/tutorial/persistence-querylanguage.htm#BNBTG&quot; rel=&quot;nofollow&quot;&gt;JPQL&lt;/a&gt;, but it also might be a buggy one as well.
+ On other hand I am free to to build a type-safe query with &lt;a href=&quot;http://docs.oracle.com/javaee/7/tutorial/persistence-criteria001.htm#GJRIJ&quot; rel=&quot;nofollow&quot;&gt;Criteria API&lt;/a&gt;, 
+but for that reason I need a &lt;b&gt;CriteriaBuilder&lt;/b&gt;, &lt;b&gt;Root&lt;/b&gt; and &lt;b&gt;CriteriaQuery&lt;/b&gt;. Let’s take an example:
+&lt;/p&gt;
+
+&lt;pre&gt;
+CriteriaBuilder cb = em.getCriteriaBuilder();
+CriteriaQuery&amp;lt;BlogEntry&amp;gt; cq = cb.createQuery(BlogEntry.class);
+Root&amp;lt;BlogEntry&amp;gt; be = cq.from(BlogEntry.class);
+cq.select(be);
+TypedQuery&amp;lt;BlogEntry&amp;gt; q = em.createQuery(cq);
+List&amp;lt;BlogEntry&amp;gt; allItems = q.getResultList();
+
+Assert.assertTrue(allItems.isEmpty());
+&lt;/pre&gt;
+
+&lt;p&gt;
+Too many things to do and remember.
+&lt;/p&gt;
+
+&lt;h3&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;
+With QueryDSL your things to remember are minimised and you may start doing what you were intended to do - write a query. Of course, you need to setup your environment to 
+create a metamodel for you:
+&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt;
+    &lt;img src=&quot;/img/s01e03.png&quot; alt=&quot;Eclipse annotation processing&quot; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;
+Then you need to configure maven &lt;strong&gt;pom.xml&lt;/strong&gt; file to add required dependencies. But that is one time work to be done for every project.
+&lt;/p&gt;
+
+&lt;pre&gt;
+&amp;lt;dependency&amp;gt;
+	&amp;lt;groupId&amp;gt;com.mysema.querydsl&amp;lt;/groupId&amp;gt;
+	&amp;lt;artifactId&amp;gt;querydsl-apt&amp;lt;/artifactId&amp;gt;
+	&amp;lt;version&amp;gt;3.6.3&amp;lt;/version&amp;gt;
+&amp;lt;/dependency&amp;gt;
+		
+&amp;lt;dependency&amp;gt;
+	&amp;lt;groupId&amp;gt;com.mysema.querydsl&amp;lt;/groupId&amp;gt;
+	&amp;lt;artifactId&amp;gt;querydsl-jpa&amp;lt;/artifactId&amp;gt;
+	&amp;lt;version&amp;gt;3.6.3&amp;lt;/version&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Plain QueryDSL syntax&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;
+Metamodel is automatically generated for you once you have prepared your domain model. You should be able to start writing your queries :)
+&lt;/p&gt;
+
+&lt;pre&gt;
+QBlogEntry qb = QBlogEntry.blogEntry;
+Assert.assertTrue(new JPAQuery(getEntityManager()).from(qb).where(qb.title.eq(&quot;test&quot;)).fetch().exists());
+&lt;/pre&gt;
+
+&lt;p&gt;Your query starts using standard methods, such as &lt;strong&gt;from&lt;/strong&gt; and &lt;strong&gt;where&lt;/strong&gt; and continues to grow once additional predicates are added. Of course, it grows based on your domain complexity.
+But at least you know what properties are available for predicate to be built.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;JPAQuery Wrapper&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;
+	Usually I am trying to go even further and minimize the list of possible properties, available for queries. 
+	This would allow you to minimize unexpected application behaviour of your application. Example provided below and detailed implementation is in &lt;a href=&quot;https://github.com/aracrown/ara-blog-examples/tree/master/s01e03&quot; rel=&quot;nofollow&quot;&gt;Git repository&lt;/a&gt;!
+&lt;/p&gt;
+
+&lt;pre&gt;
+Assert.assertTrue(new BlogEntryQueryImpl(getEntityManager()).title(&quot;test&quot;).list().isEmpty());
+&lt;/pre&gt;
+
+&lt;p&gt;
+Where the &lt;strong&gt;BlogEntryQueryImpl&lt;/strong&gt; implementation is as follows:
+&lt;/p&gt;
+
+&lt;pre&gt;
+public class BlogEntryQueryImpl extends AbstractQuery&amp;lt;QBlogEntry, BlogEntry&amp;gt; {
+
+	public BlogEntryQueryImpl(EntityManager entityManager) {
+		super(entityManager, QBlogEntry.blogEntry);
+	}
+
+	public BlogEntryQueryImpl title(String title) {
+		getQuery().where(getEntityPath().title.eq(title));
+		return this;
+	}
+
+}
+&lt;/pre&gt;
+
+&lt;p&gt;
+	As always you need to follow the requirements and see what is the best way you need for your project. 
+&lt;/p&gt;
+
+&lt;h3&gt;Cons&lt;/h3&gt;
+
+&lt;p&gt;
+You cannot join your entities based on some property, which is not a foreign key. And sometimes this is a really painful situation.
+&lt;/p&gt;
+
+&lt;h3&gt;Alternatives&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://docs.oracle.com/javaee/7/tutorial/persistence-criteria001.htm#GJRIJ&quot; rel=&quot;nofollow&quot;&gt;Criteria&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.querydsl.com/&quot; rel=&quot;nofollow&quot;&gt;QueryDSL&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.jooq.org/&quot; rel=&quot;nofollow&quot;&gt;JOOQ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://projects.spring.io/spring-data-jpa/&quot; rel=&quot;nofollow&quot;&gt;Spring Data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;And possibly others&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Discussions&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.jooq.org/2014/05/29/querydsl-vs-jooq-feature-completeness-vs-now-more-than-ever/&quot; rel=&quot;nofollow&quot;&gt;QueryDSL vs. jOOQ. Feature Completeness vs. Now More Than Ever &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/22860167/what-exactly-does-type-safe-queries-means&quot; rel=&quot;nofollow&quot;&gt;What exactly does type-safe queries means?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.mysema.com/2010/04/querydsl-as-alternative-to-jpa-2.html&quot; rel=&quot;nofollow&quot;&gt;Querydsl as an alternative to the JPA 2 Criteria API &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/7242388/comparing-querydsl-jooq-jequel-activejdbc-iciql-and-other-query-dsls&quot; rel=&quot;nofollow&quot;&gt;Comparing Querydsl, jOOQ, JEQUEL, activejdbc, iciql and other query DSLs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.credera.com/technology-insights/java/can-querydsl-part-1-enhance-simplify-existing-spring-data-jpa-repositories/&quot; rel=&quot;nofollow&quot;&gt;What Can Querydsl Do for Me Part 1: How to Enhance and Simplify Existing Spring Data JPA Repositories&lt;/a&gt;&lt;/li&gt;
+
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Resources&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/aracrown/ara-blog-examples/tree/master/s01e03&quot; rel=&quot;nofollow&quot;&gt;Source in Git repository&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://docs.oracle.com/javaee/7/tutorial/persistence-criteria001.htm#GJRIJ&quot; rel=&quot;nofollow&quot;&gt;Overview of the Criteria and Metamodel APIs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.querydsl.com/&quot; rel=&quot;nofollow&quot;&gt;QueryDSL&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.slideshare.net/timowestkamper/querydsl-overview-2014&quot; rel=&quot;nofollow&quot;&gt;Querydsl overview 2014&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.jooq.org/&quot; rel=&quot;nofollow&quot;&gt;JOOQ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://projects.spring.io/spring-data-jpa/&quot; rel=&quot;nofollow&quot;&gt;Spring Data&lt;/a&gt;&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;p&gt;
+Happy designing and coding! 
+&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Web application environment configuration using maven profiles</title>

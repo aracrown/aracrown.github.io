@@ -5,9 +5,32 @@
     <description>Java EE architecture, design and development tips, hints, code snippets and other random ideas.</description>
     <link>http://www.aracrown.org/</link>
     <atom:link href="http://www.aracrown.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 08 May 2015 14:29:50 +0300</pubDate>
-    <lastBuildDate>Fri, 08 May 2015 14:29:50 +0300</lastBuildDate>
+    <pubDate>Fri, 22 May 2015 14:40:17 +0300</pubDate>
+    <lastBuildDate>Fri, 22 May 2015 14:40:17 +0300</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Writing type-safe queries with QueryDSL</title>
+        <description type="html">
+I became a fan of type-safe queries long time ago (unless I need plain SQL queries via JDBC). What are type-safe queries and how easily they can be maintained? 
+Criteria, QueryDSL, JOOQ? This post is not about which framework is the best one. 
+It’s about how easily implement JPA queries using 
+QueryDSL.
+
+
+</description>
+        <pubDate>Fri, 22 May 2015 00:00:00 +0300</pubDate>
+        <link>http://www.aracrown.org/blog/Writing-type-safe-queries-with-QueryDSL/</link>
+        <guid isPermaLink="true">http://www.aracrown.org/blog/Writing-type-safe-queries-with-QueryDSL/</guid>
+        
+        <category>java-ee</category>
+        
+        <category>QueryDSL</category>
+        
+        <category>JPA</category>
+        
+        
+      </item>
     
       <item>
         <title>Web application environment configuration using maven profiles</title>
