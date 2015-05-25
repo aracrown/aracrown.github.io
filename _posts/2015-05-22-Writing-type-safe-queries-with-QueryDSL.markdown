@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Writing type-safe queries with QueryDSL
+title: Writing type-safe JPA queries with QueryDSL
 tags: java-ee QueryDSL JPA
 author: vr
 "header-img": "img/1.png"

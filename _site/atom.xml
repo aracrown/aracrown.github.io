@@ -4,7 +4,7 @@
  <title>Eric Jones</title>
  <link href="http://www.aracrown.org/atom.xml" rel="self"/>
  <link href="http://www.aracrown.org/"/>
- <updated>2015-05-22T14:49:57+03:00</updated>
+ <updated>2015-05-25T17:50:43+03:00</updated>
  <id>http://erjjones.github.com</id>
  <author>
    <name>Eric Jones</name>
@@ -12,7 +12,7 @@
  
  
  <entry>
-   <title>Writing type-safe queries with QueryDSL</title>
+   <title>Writing type-safe JPA queries with QueryDSL</title>
    <link href="http://www.aracrown.org/blog/Writing-type-safe-queries-with-QueryDSL/"/>
    <updated>2015-05-22T00:00:00+03:00</updated>
    <id>http://www.aracrown.org/blog/Writing-type-safe-queries-with-QueryDSL</id>
