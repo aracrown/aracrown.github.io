@@ -4,7 +4,7 @@
  <title>Eric Jones</title>
  <link href="http://www.aracrown.org/atom.xml" rel="self"/>
  <link href="http://www.aracrown.org/"/>
- <updated>2015-06-09T07:27:02+03:00</updated>
+ <updated>2015-06-09T07:28:15+03:00</updated>
  <id>http://erjjones.github.com</id>
  <author>
    <name>Eric Jones</name>
@@ -14,7 +14,7 @@
  <entry>
    <title>Micro Java EE application with Wildfly Swarm</title>
    <link href="http://www.aracrown.org/blog/Micro-Java-EE-application-with-Wildfly-Swarm/"/>
-   <updated>2015-06-08T00:00:00+03:00</updated>
+   <updated>2015-06-09T00:00:00+03:00</updated>
    <id>http://www.aracrown.org/blog/Micro-Java-EE-application-with-Wildfly-Swarm</id>
    <content type="html">&lt;p&gt;
 Microservices are here already for a while. They came with cloud solutions, RESTful services, &lt;a href=&quot;http://backbonejs.org/&quot; rel=&quot;nofollow&quot;&gt;Backbone.js&lt;/a&gt; , 
