@@ -4,12 +4,175 @@
  <title>Eric Jones</title>
  <link href="http://www.aracrown.org/atom.xml" rel="self"/>
  <link href="http://www.aracrown.org/"/>
- <updated>2015-05-25T17:50:43+03:00</updated>
+ <updated>2015-06-09T07:27:02+03:00</updated>
  <id>http://erjjones.github.com</id>
  <author>
    <name>Eric Jones</name>
  </author>
  
+ 
+ <entry>
+   <title>Micro Java EE application with Wildfly Swarm</title>
+   <link href="http://www.aracrown.org/blog/Micro-Java-EE-application-with-Wildfly-Swarm/"/>
+   <updated>2015-06-08T00:00:00+03:00</updated>
+   <id>http://www.aracrown.org/blog/Micro-Java-EE-application-with-Wildfly-Swarm</id>
+   <content type="html">&lt;p&gt;
+Microservices are here already for a while. They came with cloud solutions, RESTful services, &lt;a href=&quot;http://backbonejs.org/&quot; rel=&quot;nofollow&quot;&gt;Backbone.js&lt;/a&gt; , 
+&lt;a href=&quot;https://angularjs.org/&quot; rel=&quot;nofollow&quot;&gt;AngularJS&lt;/a&gt;  and other javascript frameworks, however only recently they got a new keyword - &quot;microservices&quot;.
+And of course they will stay. Due to the nature of nowadays software architecture, cloud hosting and client rendering.
+I you want to be pragmatic and lean - you do not need microservices. If your software is complex, it needs easy support, fast deployment, easy clustering and serving for a single module (e.g. finance module within huge
+CRM) then you might thing about going into microservices.
+And here &lt;a href=&quot;http://wildfly.org/news/2015/06/05/WildFly-Swarm-Alpha2/&quot; rel=&quot;nofollow&quot;&gt;Wildfly Swarm&lt;/a&gt; comes in.
+
+&lt;/p&gt;
+
+&lt;h3&gt;What is Wildfly Swarm?&lt;/h3&gt;
+
+&lt;p&gt;
+You can think about &lt;a href=&quot;http://wildfly.org/news/2015/06/05/WildFly-Swarm-Alpha2/&quot; rel=&quot;nofollow&quot;&gt;Wildfly Swarm&lt;/a&gt;  as a micro application server with features which are required for your applications only.
+And these features are embedded into one single jar together with your module. Yes, coupling with application server does not smell well, but useful in some cases. That&#39;s why I 
+always say that you need to stick with your requirements and check if need such type of architecture.
+
+&lt;/p&gt;
+
+&lt;h3&gt;Example&lt;/h3&gt;
+
+&lt;p&gt;
+The easiest example to provide is REST + DB as a single microservice for a single module. You define data entities and expose them via REST endpoint. UI may be created as a separate microservice.
+&lt;/p&gt;
+
+&lt;h3&gt;What you need?&lt;/h3&gt;
+
+&lt;p&gt;
+Wildfly Swarm Alpha3-SNAPSHOT. Alpha1 did not support JPA and Alpha2 still has some issues which are already fixed in latest SNAPSHOT version. This means that you need to grab it from github and build yourself. 
+Or wait for Alpha3 release.
+&lt;/p&gt;
+
+&lt;p&gt;
+Then you need some wildfly dependencies.
+&lt;/p&gt;
+
+&lt;pre&gt;
+&amp;lt;dependency&amp;gt;
+	&amp;lt;groupId&amp;gt;org.wildfly.swarm&amp;lt;/groupId&amp;gt;
+	&amp;lt;artifactId&amp;gt;wildfly-swarm-jpa&amp;lt;/artifactId&amp;gt;
+	&amp;lt;version&amp;gt;${wildfly-swarm.version}&amp;lt;/version&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&amp;lt;dependency&amp;gt;
+	&amp;lt;groupId&amp;gt;org.wildfly.swarm&amp;lt;/groupId&amp;gt;
+	&amp;lt;artifactId&amp;gt;wildfly-swarm-weld-jaxrs&amp;lt;/artifactId&amp;gt;
+	&amp;lt;version&amp;gt;${wildfly-swarm.version}&amp;lt;/version&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&lt;/pre&gt;
+
+&lt;p&gt;
+And wildfly plugins...
+&lt;/p&gt;
+&lt;pre&gt;
+&amp;lt;plugin&amp;gt;
+	&amp;lt;groupId&amp;gt;org.wildfly.swarm&amp;lt;/groupId&amp;gt;
+	&amp;lt;artifactId&amp;gt;wildfly-swarm-plugin&amp;lt;/artifactId&amp;gt;
+	&amp;lt;version&amp;gt;${wildfly-swarm.version}&amp;lt;/version&amp;gt;
+	&amp;lt;configuration&amp;gt;
+		&amp;lt;mainClass&amp;gt;org.aracrown.blog.s01e04.Main&amp;lt;/mainClass&amp;gt;
+	&amp;lt;/configuration&amp;gt;
+	&amp;lt;executions&amp;gt;
+		&amp;lt;execution&amp;gt;
+			&amp;lt;goals&amp;gt;
+				&amp;lt;goal&amp;gt;package&amp;lt;/goal&amp;gt;
+			&amp;lt;/goals&amp;gt;
+		&amp;lt;/execution&amp;gt;
+	&amp;lt;/executions&amp;gt;
+&amp;lt;/plugin&amp;gt;
+&lt;/pre&gt;
+
+&lt;p&gt;
+And some code... Ok, &lt;a href=&quot;https://github.com/aracrown/ara-blog-examples/tree/master/s01e04&quot; rel=&quot;nofollow&quot;&gt;source is in Git repository&lt;/a&gt;, I will not repeat myself here :)
+&lt;/p&gt;
+
+&lt;p&gt;
+And the main thing, which comes to Wildfly swarm - configuration! So far you need a Java class with main method in order to be able to start it as a regular jar archive. That&#39;s the place where nasty things happen :)
+
+&lt;/p&gt;
+&lt;pre&gt;
+package org.aracrown.blog.s01e04;
+
+import org.aracrown.blog.s01e04.dao.BlogEntryDao;
+import org.aracrown.blog.s01e04.model.BlogEntry;
+import org.aracrown.blog.s01e04.query.BlogEntryQueryImpl;
+import org.aracrown.blog.s01e04.resources.BlogEntriesResource;
+import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
+import org.wildfly.swarm.container.Container;
+import org.wildfly.swarm.datasources.Datasource;
+import org.wildfly.swarm.datasources.DatasourceDeployment;
+import org.wildfly.swarm.datasources.DriverDeployment;
+import org.wildfly.swarm.jaxrs.JAXRSDeployment;
+
+public class Main {
+	public static void main(String[] args) throws Exception {
+		Container container = new Container();
+		container.start();
+
+		DriverDeployment driverDeployment = new DriverDeployment(container, &quot;com.h2database:h2&quot;, &quot;h2&quot;);
+		container.deploy(driverDeployment);
+
+		// Create a DS deployment
+		DatasourceDeployment dsDeployment = new DatasourceDeployment(container, new Datasource(&quot;ExampleDS&quot;)
+				.connectionURL(&quot;jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE&quot;).driver(&quot;h2&quot;).authentication(&quot;sa&quot;, &quot;sa&quot;));
+		container.deploy(dsDeployment);
+
+		JAXRSDeployment deployment = new JAXRSDeployment(container);
+		deployment.getArchive().addClasses(BlogEntryDao.class, BlogEntryQueryImpl.class);
+		deployment.getArchive().addPackage(BlogEntry.class.getPackage());
+		deployment.getArchive().addPackage(BlogEntriesResource.class.getPackage());
+		deployment.getArchive().addAsWebInfResource(new ClassLoaderAsset(&quot;META-INF/persistence.xml&quot;, Main.class.getClassLoader()),
+				&quot;classes/META-INF/persistence.xml&quot;);
+		deployment.getArchive().addAsWebInfResource(new ClassLoaderAsset(&quot;META-INF/load.sql&quot;, Main.class.getClassLoader()),
+				&quot;classes/META-INF/load.sql&quot;);
+		deployment.getArchive().addAsWebInfResource(new ClassLoaderAsset(&quot;META-INF/beans.xml&quot;, Main.class.getClassLoader()),
+				&quot;classes/META-INF/beans.xml&quot;);
+
+		container.deploy(deployment);
+	}
+}
+
+&lt;/pre&gt;
+
+&lt;p&gt;
+You tell the container to use JAX-RS and datasource modules only. You can expose your configuration properties to external properties file, but what you need is adding classes and resources into archive manually.
+Executing maven goal &lt;strong&gt;mvn package&lt;/strong&gt; will create you a single jar containing all required dependencies with a suffix &lt;strong&gt;&quot;-swarm&quot;&lt;/strong&gt;.
+&lt;/p&gt;
+
+&lt;p&gt;
+And at the end you have a single jar file and you can distribute it onto as many servers as you need. and run with just a single line: 
+&lt;/p&gt;
+
+&lt;pre&gt;java -jar target/s01e04-1.0.0-SNAPSHOT-swarm.jar&lt;/pre&gt;
+
+&lt;h3&gt;Resources&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/aracrown/ara-blog-examples/tree/master/s01e04&quot; rel=&quot;nofollow&quot;&gt;Source in Git repository&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/wildfly-swarm/wildfly-swarm-examples&quot; rel=&quot;nofollow&quot;&gt;Wildfly-Swarm examples privided by Wildfly&lt;/a&gt;&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Talks and discussions&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chrisstucchio.com/blog/2014/microservices_for_the_grumpy_neckbeard.html&quot; rel=&quot;nofollow&quot;&gt;Microservices for the Grumpy Neckbeard&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.boundary.com/blog/2014/08/microservices-conways-law/&quot; rel=&quot;nofollow&quot;&gt;Microservices, or How I Learned To Stop Making Monoliths and Love Conway’s Law&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://rick-hightower.blogspot.fi/2015/03/java-microservices-architecture.html&quot; rel=&quot;nofollow&quot;&gt;Java Microservices Architecture&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://martinfowler.com/bliki/MonolithFirst.html&quot; rel=&quot;nofollow&quot;&gt;MonolithFirst&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://bravenewgeek.com/service-disoriented-architecture/&quot; rel=&quot;nofollow&quot;&gt;Service-Disoriented Architecture&lt;/a&gt;&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;p&gt;
+Happy designing and coding! 
+&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Writing type-safe JPA queries with QueryDSL</title>
