@@ -142,6 +142,29 @@ And at the end you have a single jar file and you can distribute it onto as many
 
 <pre>java -jar target/s01e04-1.0.0-SNAPSHOT-swarm.jar</pre>
 
+<p>REST resource call would look like</p>
+<pre>curl -v http://localhost:8080/blogs/</pre>
+<p>And result:</p>
+
+<pre>
+* Hostname was NOT found in DNS cache
+*   Trying ::1...
+* Connected to localhost (::1) port 8080 (#0)
+> GET /blogs/ HTTP/1.1
+> User-Agent: curl/7.37.1
+> Host: localhost:8080
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Connection: keep-alive
+< Content-Type: application/json
+< Content-Length: 755
+< Date: Wed, 10 Jun 2015 18:37:26 GMT
+< 
+* Connection #0 to host localhost left intact
+{"total":12,"count":10,"pageSize":10,"currentPage":0,"items":[{"id":1,"title":"Wildfly Swarm with JPA and REST1","author":"Penny"},{"id":2,"title":"Wildfly Swarm with JPA and REST2","author":"Penny"},{"id":3,"title":"Wildfly Swarm with JPA and REST3","author":"Penny"},{"id":4,"title":"Wildfly Swarm with JPA and REST4","author":"Penny"},{"id":5,"title":"Wildfly Swarm with JPA and REST5","author":"Penny"},{"id":6,"title":"Wildfly Swarm with JPA and REST6","author":"Penny"},{"id":7,"title":"Wildfly Swarm with JPA and REST7","author":"Penny"},{"id":8,"title":"Wildfly Swarm with JPA and REST8","author":"Penny"},{"id":9,"title":"Wildfly Swarm with JPA and REST9","author":"Penny"},{"id":10,"title":"Wildfly Swarm with JPA and REST10","author":"Penny"}]}
+
+</pre>
 <h3>Resources</h3>
 
 <ul>

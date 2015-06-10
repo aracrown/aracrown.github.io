@@ -4,7 +4,7 @@
  <title>Eric Jones</title>
  <link href="http://www.aracrown.org/atom.xml" rel="self"/>
  <link href="http://www.aracrown.org/"/>
- <updated>2015-06-09T07:29:18+03:00</updated>
+ <updated>2015-06-10T21:39:50+03:00</updated>
  <id>http://erjjones.github.com</id>
  <author>
    <name>Eric Jones</name>
@@ -149,6 +149,29 @@ And at the end you have a single jar file and you can distribute it onto as many
 
 &lt;pre&gt;java -jar target/s01e04-1.0.0-SNAPSHOT-swarm.jar&lt;/pre&gt;
 
+&lt;p&gt;REST resource call would look like&lt;/p&gt;
+&lt;pre&gt;curl -v http://localhost:8080/blogs/&lt;/pre&gt;
+&lt;p&gt;And result:&lt;/p&gt;
+
+&lt;pre&gt;
+* Hostname was NOT found in DNS cache
+*   Trying ::1...
+* Connected to localhost (::1) port 8080 (#0)
+&amp;gt; GET /blogs/ HTTP/1.1
+&amp;gt; User-Agent: curl/7.37.1
+&amp;gt; Host: localhost:8080
+&amp;gt; Accept: */*
+&amp;gt; 
+&amp;lt; HTTP/1.1 200 OK
+&amp;lt; Connection: keep-alive
+&amp;lt; Content-Type: application/json
+&amp;lt; Content-Length: 755
+&amp;lt; Date: Wed, 10 Jun 2015 18:37:26 GMT
+&amp;lt; 
+* Connection #0 to host localhost left intact
+{&quot;total&quot;:12,&quot;count&quot;:10,&quot;pageSize&quot;:10,&quot;currentPage&quot;:0,&quot;items&quot;:[{&quot;id&quot;:1,&quot;title&quot;:&quot;Wildfly Swarm with JPA and REST1&quot;,&quot;author&quot;:&quot;Penny&quot;},{&quot;id&quot;:2,&quot;title&quot;:&quot;Wildfly Swarm with JPA and REST2&quot;,&quot;author&quot;:&quot;Penny&quot;},{&quot;id&quot;:3,&quot;title&quot;:&quot;Wildfly Swarm with JPA and REST3&quot;,&quot;author&quot;:&quot;Penny&quot;},{&quot;id&quot;:4,&quot;title&quot;:&quot;Wildfly Swarm with JPA and REST4&quot;,&quot;author&quot;:&quot;Penny&quot;},{&quot;id&quot;:5,&quot;title&quot;:&quot;Wildfly Swarm with JPA and REST5&quot;,&quot;author&quot;:&quot;Penny&quot;},{&quot;id&quot;:6,&quot;title&quot;:&quot;Wildfly Swarm with JPA and REST6&quot;,&quot;author&quot;:&quot;Penny&quot;},{&quot;id&quot;:7,&quot;title&quot;:&quot;Wildfly Swarm with JPA and REST7&quot;,&quot;author&quot;:&quot;Penny&quot;},{&quot;id&quot;:8,&quot;title&quot;:&quot;Wildfly Swarm with JPA and REST8&quot;,&quot;author&quot;:&quot;Penny&quot;},{&quot;id&quot;:9,&quot;title&quot;:&quot;Wildfly Swarm with JPA and REST9&quot;,&quot;author&quot;:&quot;Penny&quot;},{&quot;id&quot;:10,&quot;title&quot;:&quot;Wildfly Swarm with JPA and REST10&quot;,&quot;author&quot;:&quot;Penny&quot;}]}
+
+&lt;/pre&gt;
 &lt;h3&gt;Resources&lt;/h3&gt;
 
 &lt;ul&gt;
