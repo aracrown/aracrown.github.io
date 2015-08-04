@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Java object to object mapping - which one to choose?
+title: Java object to object mapping - which framework to choose? - Part 1
 tags: java java-ee selma mapstruct mapping
 author: vr
 "header-img": "img/1.png"

@@ -4,7 +4,7 @@
  <title>Eric Jones</title>
  <link href="http://www.aracrown.org/atom.xml" rel="self"/>
  <link href="http://www.aracrown.org/"/>
- <updated>2015-08-04T15:51:06+03:00</updated>
+ <updated>2015-08-04T15:55:41+03:00</updated>
  <id>http://erjjones.github.com</id>
  <author>
    <name>Eric Jones</name>
@@ -12,10 +12,10 @@
  
  
  <entry>
-   <title>Java object to object mapping - which one to choose?</title>
-   <link href="http://www.aracrown.org/blog/Java-object-to-object-mapping-which-one-to-choose/"/>
+   <title>Java object to object mapping - which framework to choose? - Part 1</title>
+   <link href="http://www.aracrown.org/blog/Java-object-to-object-mapping-which-framework-to-choose/"/>
    <updated>2015-08-04T00:00:00+03:00</updated>
-   <id>http://www.aracrown.org/blog/Java-object-to-object-mapping-which-one-to-choose</id>
+   <id>http://www.aracrown.org/blog/Java-object-to-object-mapping-which-framework-to-choose</id>
    <content type="html">&lt;p&gt;
 Many applications in my career had a need for a custom POJO mapper. Because of project complexity (and absence of existing mapping frameworks at that time) usually manual mapping was used in almost 99% cases :) What about another 1%? No mapping needed at all :)
 &lt;/p&gt;
