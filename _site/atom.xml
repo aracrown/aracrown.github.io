@@ -4,12 +4,75 @@
  <title>Eric Jones</title>
  <link href="http://www.aracrown.org/atom.xml" rel="self"/>
  <link href="http://www.aracrown.org/"/>
- <updated>2015-06-10T21:39:50+03:00</updated>
+ <updated>2015-08-04T15:48:27+03:00</updated>
  <id>http://erjjones.github.com</id>
  <author>
    <name>Eric Jones</name>
  </author>
  
+ 
+ <entry>
+   <title>Java object to object mapping - which one to choose?</title>
+   <link href="http://www.aracrown.org/blog/Java-object-to-object-mapping-which-one-to-choose/"/>
+   <updated>2015-08-04T00:00:00+03:00</updated>
+   <id>http://www.aracrown.org/blog/Java-object-to-object-mapping-which-one-to-choose</id>
+   <content type="html">&lt;p&gt;
+Many applications in my career had a need for a custom POJO mapper. Because of project complexity (and absence of existing mapping frameworks at that time) usually manual mapping was used in almost 99% cases :) What about another 1%? No mapping needed at all :)
+&lt;/p&gt;
+
+&lt;p&gt;
+I was following the discussions and mapping frameworks from time to time and was trying to figure out if I need one already? Are there any frameworks to do the job? Are there any frameworks to do the job right? Is it worth to look for such framework?
+&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt;
+    &lt;img class=&quot;img-responsive&quot; src=&quot;/img/object-mapping.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;Photographs by &lt;a href=&quot;https://www.flickr.com/photos/bonaparty/&quot;&gt;Louis K.&lt;/a&gt;.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;
+It depends. 
+&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;If your task is simple - then why another framework in your classpath?&lt;/li&gt;
+&lt;li&gt;If your objects are complex - will the framework do the job? You know the logic behind, so it might happen that you will complete the task faster than finding, configuring, running and testing a new framework;&lt;/li&gt;
+&lt;li&gt;For one-to-one mapping and cloning (same source type, same target type) maybe apache commons beanutils is enough?&lt;/li&gt;
+&lt;li&gt;Boring daily mapping? Yeah, maybe the mapper will help to make your life more interesting!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;What are the requirements?&lt;/h3&gt;
+
+&lt;p&gt;
+Let&#39;s make some requirements for a mapping framework. These will eliminate many of already existing  in the market.
+&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;DTO to JPA (or other DTO, does not matter too much) - meaning that JPA entity will not be exposed to a public world;&lt;/li&gt;
+&lt;li&gt;Compile time. Why? Do you really want a runtime bean resolving, reflection, etc? Then think about performance before choosing the right framework;&lt;/li&gt;
+&lt;li&gt;Annotation based. Ok, annotation based and compile time requirements are little bit too much, because annotation is used only to generate a code for you. But if it is easy to use - why not?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Mapping frameworks&lt;/h3&gt;
+
+&lt;p&gt;
+There is a great article covering the existing frameworks: 
+&lt;a href=&quot;http://www.javacodegeeks.com/2013/10/java-object-to-object-mapper.html&quot; rel=&quot;nofollow&quot;&gt;Java Object to Object Mapper&lt;/a&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+The majority of these frameworks do not have annotation based configuration except 
+&lt;a href=&quot;http://dozer.sourceforge.net/&quot; rel=&quot;nofollow&quot;&gt;Dozer&lt;/a&gt;. However Dozer does not fly well according the performance comparision &lt;a href=&quot;http://blog.sokolenko.me/2013/05/dozer-vs-orika-vs-manual.html&quot; rel=&quot;nofollow&quot;&gt;Dozer vs Orika vs Manual&lt;/a&gt;. So I excluded this framework as well.
+&lt;/p&gt;
+
+&lt;p&gt;
+More interesting solutions are &lt;a href=&quot;http://www.selma-java.org/&quot; rel=&quot;nofollow&quot;&gt;Selma&lt;/a&gt; and &lt;a href=&quot;http://mapstruct.org/&quot; rel=&quot;nofollow&quot;&gt;MapStruct&lt;/a&gt;.
+&lt;/p&gt;
+
+&lt;p&gt;
+I will try to cover them in next post! 
+&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Micro Java EE application with Wildfly Swarm</title>
