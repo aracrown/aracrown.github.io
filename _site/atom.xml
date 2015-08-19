@@ -4,12 +4,115 @@
  <title>Eric Jones</title>
  <link href="http://www.aracrown.org/atom.xml" rel="self"/>
  <link href="http://www.aracrown.org/"/>
- <updated>2015-08-04T15:55:41+03:00</updated>
+ <updated>2015-08-19T13:18:36+03:00</updated>
  <id>http://erjjones.github.com</id>
  <author>
    <name>Eric Jones</name>
  </author>
  
+ 
+ <entry>
+   <title>Java object to object mapping - which framework to choose? - Part 2</title>
+   <link href="http://www.aracrown.org/blog/Java-object-to-object-mapping-which-framework-to-choose-Part-2/"/>
+   <updated>2015-08-19T00:00:00+03:00</updated>
+   <id>http://www.aracrown.org/blog/Java-object-to-object-mapping-which-framework-to-choose-Part-2</id>
+   <content type="html">&lt;p&gt;
+We&#39;ve started a discussion on current mapping frameworks in &lt;a href=&quot;/blog/Java-object-to-object-mapping-which-framework-to-choose/&quot;&gt;Part 1&lt;/a&gt;.
+Selection was minimized to &lt;a href=&quot;http://www.selma-java.org/&quot; rel=&quot;nofollow&quot;&gt;Selma&lt;/a&gt; and &lt;a href=&quot;http://mapstruct.org/&quot; rel=&quot;nofollow&quot;&gt;MapStruct&lt;/a&gt;.
+So which one to choose if I do not want to do the job myself?
+&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt;
+    &lt;img class=&quot;img-responsive&quot; src=&quot;/img/object-mapping.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;Photographs by &lt;a href=&quot;https://www.flickr.com/photos/bonaparty/&quot;&gt;Louis K.&lt;/a&gt;.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;
+Selma and &lt;a href=&quot;http://mapstruct.org/&quot; rel=&quot;nofollow&quot;&gt;MapStruct&lt;/a&gt; works well when initial learning curve passed how to configure a mapper. 
+There might be the personal preference which one to choose. More customizations come with Mapstruct. Generated code might be more readable in &lt;a href=&quot;http://mapstruct.org/&quot; rel=&quot;nofollow&quot;&gt;MapStruct&lt;/a&gt;, however they both might generate duplicated code when mapping from Object to a simple entity in case Object has multiple properties mapped. 
+&lt;/p&gt;
+
+&lt;h3&gt;Simple comparison&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Subject/Feature
+&lt;/th&gt;
+&lt;th&gt;Selma
+&lt;/th&gt;
+&lt;th&gt;MapStruct
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Define mapping once
+&lt;/td&gt;
+&lt;td&gt;ok
+&lt;/td&gt;
+&lt;td&gt;using @InheritInverseConfiguration does not work in more complex scenarios (at the given time of writing the blog entry)
+&lt;/td&gt;
+&lt;/tr&gt;
+
+
+&lt;tr&gt;
+&lt;td&gt;Ease to define the mapping
+&lt;/td&gt;
+&lt;td&gt;yes
+&lt;/td&gt;
+&lt;td&gt;needs a good initial learning curve
+&lt;/td&gt;
+&lt;/tr&gt;
+
+
+&lt;tr&gt;
+&lt;td&gt;Customizations
+&lt;/td&gt;
+&lt;td&gt;minimal
+&lt;/td&gt;
+&lt;td&gt;advanced. Many places may be customized
+&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Generated code
+&lt;/td&gt;
+&lt;td&gt;with duplications, readability might be improved
+&lt;/td&gt;
+&lt;td&gt;with duplications, readability is better than Selma
+&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Annotation usage 
+&lt;/td&gt;
+&lt;td&gt;class level
+&lt;/td&gt;
+&lt;td&gt;method level
+&lt;/td&gt;
+&lt;/tr&gt;
+
+
+&lt;/table&gt;
+
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;
+I think both projects are great and it&#39;s up to you to decide which one you would like to use in your project. 
+There is always another option - do it yourself :)
+Currently I am using &lt;a href=&quot;http://www.selma-java.org/&quot; rel=&quot;nofollow&quot;&gt;Selma&lt;/a&gt;. Happy so far :)
+
+&lt;/p&gt;
+
+&lt;h3&gt;Resources&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/aracrown/ara-blog-examples/tree/master/s01e05&quot; rel=&quot;nofollow&quot;&gt;Source in Git repository&lt;/a&gt;&lt;/li&gt;
+
+&lt;/ul&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Java object to object mapping - which framework to choose? - Part 1</title>
@@ -69,7 +172,7 @@ More interesting solutions are &lt;a href=&quot;http://www.selma-java.org/&quot;
 &lt;/p&gt;
 
 &lt;p&gt;
-I will try to cover them in next post! 
+I will try to cover them in &lt;a href=&quot;/blog/Java-object-to-object-mapping-which-framework-to-choose-Part-2/&quot;&gt;Part 2&lt;/a&gt;! 
 &lt;/p&gt;
 </content>
  </entry>

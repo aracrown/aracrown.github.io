@@ -63,5 +63,5 @@ More interesting solutions are <a href="http://www.selma-java.org/" rel="nofollo
 </p>
 
 <p>
-I will try to cover them in next post! 
+I will try to cover them in <a href="{{ site.baseurl }}/blog/Java-object-to-object-mapping-which-framework-to-choose-Part-2/">Part 2</a>! 
 </p>

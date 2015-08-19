@@ -8,9 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Java EE architecture, design and development tips, hints, code snippets and other random ideas.">
 
-    <title>Java object to object mapping - which framework to choose? - Part 1 - ara dev</title>
+    <title>Java object to object mapping - which framework to choose? - Part 2 - ara dev</title>
 
-    <link rel="canonical" href="http://www.aracrown.org/blog/Java-object-to-object-mapping-which-framework-to-choose/">
+    <link rel="canonical" href="http://www.aracrown.org/blog/Java-object-to-object-mapping-which-framework-to-choose-Part-2/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -64,11 +64,11 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>Java object to object mapping - which framework to choose? - Part 1</h1>
+                    <h1>Java object to object mapping - which framework to choose? - Part 2</h1>
                     
                     <span class="meta">Posted by 
                     <a href="https://www.linkedin.com/in/vytasr" rel="nofollow">vr</a>
-                     on August 4, 2015</span>
+                     on August 19, 2015</span>
                 
                 	
                 	 <a href="/tags/java" title="View posts tagged with &quot;java&quot;"><span class="label label-success"><i class="fa fa-tag"></i> java</span></a>     <a href="/tags/java-ee" title="View posts tagged with &quot;java-ee&quot;"><span class="label label-success"><i class="fa fa-tag"></i> java-ee</span></a>     <a href="/tags/selma" title="View posts tagged with &quot;selma&quot;"><span class="label label-success"><i class="fa fa-tag"></i> selma</span></a>     <a href="/tags/mapstruct" title="View posts tagged with &quot;mapstruct&quot;"><span class="label label-success"><i class="fa fa-tag"></i> mapstruct</span></a>     <a href="/tags/mapping" title="View posts tagged with &quot;mapping&quot;"><span class="label label-success"><i class="fa fa-tag"></i> mapping</span></a>    
@@ -87,11 +87,9 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
 				<p>
-Many applications in my career had a need for a custom POJO mapper. Because of project complexity (and absence of existing mapping frameworks at that time) usually manual mapping was used in almost 99% cases :) What about another 1%? No mapping needed at all :)
-</p>
-
-<p>
-I was following the discussions and mapping frameworks from time to time and was trying to figure out if I need one already? Are there any frameworks to do the job? Are there any frameworks to do the job right? Is it worth to look for such framework?
+We've started a discussion on current mapping frameworks in <a href="/blog/Java-object-to-object-mapping-which-framework-to-choose/">Part 1</a>.
+Selection was minimized to <a href="http://www.selma-java.org/" rel="nofollow">Selma</a> and <a href="http://mapstruct.org/" rel="nofollow">MapStruct</a>.
+So which one to choose if I do not want to do the job myself?
 </p>
 
 <p><a href="#">
@@ -100,47 +98,89 @@ I was following the discussions and mapping frameworks from time to time and was
 <span class="caption text-muted">Photographs by <a href="https://www.flickr.com/photos/bonaparty/">Louis K.</a>.</span></p>
 
 <p>
-It depends. 
+Selma and <a href="http://mapstruct.org/" rel="nofollow">MapStruct</a> works well when initial learning curve passed how to configure a mapper. 
+There might be the personal preference which one to choose. More customizations come with Mapstruct. Generated code might be more readable in <a href="http://mapstruct.org/" rel="nofollow">MapStruct</a>, however they both might generate duplicated code when mapping from Object to a simple entity in case Object has multiple properties mapped. 
 </p>
+
+<h3>Simple comparison</h3>
+
+<table>
+<thead>
+<tr>
+<th>Subject/Feature
+</th>
+<th>Selma
+</th>
+<th>MapStruct
+</th>
+</tr>
+</thead>
+
+<tr>
+<td>Define mapping once
+</td>
+<td>ok
+</td>
+<td>using @InheritInverseConfiguration does not work in more complex scenarios (at the given time of writing the blog entry)
+</td>
+</tr>
+
+
+<tr>
+<td>Ease to define the mapping
+</td>
+<td>yes
+</td>
+<td>needs a good initial learning curve
+</td>
+</tr>
+
+
+<tr>
+<td>Customizations
+</td>
+<td>minimal
+</td>
+<td>advanced. Many places may be customized
+</td>
+</tr>
+
+<tr>
+<td>Generated code
+</td>
+<td>with duplications, readability might be improved
+</td>
+<td>with duplications, readability is better than Selma
+</td>
+</tr>
+
+<tr>
+<td>Annotation usage 
+</td>
+<td>class level
+</td>
+<td>method level
+</td>
+</tr>
+
+
+</table>
+
+<h3>Conclusion</h3>
+
+<p>
+I think both projects are great and it's up to you to decide which one you would like to use in your project. 
+There is always another option - do it yourself :)
+Currently I am using <a href="http://www.selma-java.org/" rel="nofollow">Selma</a>. Happy so far :)
+
+</p>
+
+<h3>Resources</h3>
 
 <ul>
-<li>If your task is simple - then why another framework in your classpath?</li>
-<li>If your objects are complex - will the framework do the job? You know the logic behind, so it might happen that you will complete the task faster than finding, configuring, running and testing a new framework;</li>
-<li>For one-to-one mapping and cloning (same source type, same target type) maybe apache commons beanutils is enough?</li>
-<li>Boring daily mapping? Yeah, maybe the mapper will help to make your life more interesting!</li>
+<li><a href="https://github.com/aracrown/ara-blog-examples/tree/master/s01e05" rel="nofollow">Source in Git repository</a></li>
+
 </ul>
-
-<h3>What are the requirements?</h3>
-
-<p>
-Let's make some requirements for a mapping framework. These will eliminate many of already existing  in the market.
-</p>
-
-<ul>
-<li>DTO to JPA (or other DTO, does not matter too much) - meaning that JPA entity will not be exposed to a public world;</li>
-<li>Compile time. Why? Do you really want a runtime bean resolving, reflection, etc? Then think about performance before choosing the right framework;</li>
-<li>Annotation based. Ok, annotation based and compile time requirements are little bit too much, because annotation is used only to generate a code for you. But if it is easy to use - why not?</li>
-</ul>
-
-<h3>Mapping frameworks</h3>
-
-<p>
-There is a great article covering the existing frameworks: 
-<a href="http://www.javacodegeeks.com/2013/10/java-object-to-object-mapper.html" rel="nofollow">Java Object to Object Mapper</a>
-</p>
-
-<p>
-The majority of these frameworks do not have annotation based configuration except 
-<a href="http://dozer.sourceforge.net/" rel="nofollow">Dozer</a>. However Dozer does not fly well according the performance comparision <a href="http://blog.sokolenko.me/2013/05/dozer-vs-orika-vs-manual.html" rel="nofollow">Dozer vs Orika vs Manual</a>. So I excluded this framework as well.
-</p>
-
-<p>
-More interesting solutions are <a href="http://www.selma-java.org/" rel="nofollow">Selma</a> and <a href="http://mapstruct.org/" rel="nofollow">MapStruct</a>.
-</p>
-
-<p>
-I will try to cover them in <a href="/blog/Java-object-to-object-mapping-which-framework-to-choose-Part-2/">Part 2</a>! 
-</p>
 
 
                 <hr>
@@ -148,13 +188,9 @@ I will try to cover them in <a href="/blog/Java-object-to-object-mapping-which-f
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/Micro-Java-EE-application-with-Wildfly-Swarm/" data-toggle="tooltip" data-placement="top" title="Micro Java EE application with Wildfly Swarm">&larr; Previous Post</a>
+                        <a href="/blog/Java-object-to-object-mapping-which-framework-to-choose/" data-toggle="tooltip" data-placement="top" title="Java object to object mapping - which framework to choose? - Part 1">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/blog/Java-object-to-object-mapping-which-framework-to-choose-Part-2/" data-toggle="tooltip" data-placement="top" title="Java object to object mapping - which framework to choose? - Part 2">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
